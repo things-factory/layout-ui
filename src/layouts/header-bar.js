@@ -19,7 +19,7 @@ class HeaderBar extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <app-toolbar .activePage=${this._page}>
+      <app-toolbar>
         <mwc-icon slot="left-end">arrow_back</mwc-icon>
       </app-toolbar>
     `
