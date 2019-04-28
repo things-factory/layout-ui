@@ -1,11 +1,17 @@
 import { LitElement, html, css } from 'lit-element'
 
 import { connect } from 'pwa-helpers/connect-mixin.js'
-import { store } from '@things-factory/shell'
+import { store, HOMEPAGE } from '@things-factory/shell'
 
 import './app-toolbar'
 
 class HeaderBar extends connect(store)(LitElement) {
+  static get properties() {
+    return {
+      _page: String
+    }
+  }
+
   static get styles() {
     return [
       css`
@@ -20,13 +26,31 @@ class HeaderBar extends connect(store)(LitElement) {
   render() {
     return html`
       <app-toolbar>
-        <mwc-icon slot="left-end">arrow_back</mwc-icon>
+        ${this._isHome()
+          ? html``
+          : html`
+              <mwc-icon @click=${e => history.back()} slot="left-end">arrow_back</mwc-icon>
+            `}
       </app-toolbar>
     `
   }
 
   stateChanged(state) {
     this._page = state.app.page
+  }
+
+  _isHome() {
+    // TODO.. 정확한 방법 또는 을 찾아야 한다.
+    if (this._page == HOMEPAGE) {
+      return true
+    }
+
+    var pathname = location.pathname
+    if (pathname == '/' || pathname.startsWith(`/${HOMEPAGE}`)) {
+      return true
+    }
+
+    return false
   }
 }
 
