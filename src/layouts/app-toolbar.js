@@ -132,7 +132,7 @@ class AppToolbar extends connect(store)(LitElement) {
 
   stateChanged(state) {
     this._appTools = state.layout.appTools
-    this._activPage = state.route.activePage
+    this._activePage = state.route.activePage
   }
 
   updated(changedProps) {
