@@ -27,10 +27,10 @@ class PageContextBar extends connect(store)(LitElement) {
 
   render() {
     var frontContextTools = this._footers.filter(
-      tool => tool.position == TOOL_POSITION.FRONT_END || tool.position == TOOL_POSITION.FRONT
+      tool => tool.position == TOOL_POSITION.LEFT_END || tool.position == TOOL_POSITION.LEFT
     )
     var rearContextTools = this._footers.filter(
-      tool => tool.position == TOOL_POSITION.REAR_END || tool.position == TOOL_POSITION.REAR
+      tool => tool.position == TOOL_POSITION.RIGHT_END || tool.position == TOOL_POSITION.RIGHT
     )
 
     return html`
