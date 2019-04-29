@@ -29,7 +29,7 @@ class HeaderBar extends connect(store)(LitElement) {
         ${this._isHome()
           ? html``
           : html`
-              <mwc-icon @click=${e => history.back()} slot="left-end">arrow_back</mwc-icon>
+              <mwc-icon @click=${e => history.back()} slot="front-end">arrow_back</mwc-icon>
             `}
       </app-toolbar>
     `
