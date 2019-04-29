@@ -10,7 +10,7 @@ import { TOOL_POSITION } from '@things-factory/layout-base'
 class AppToolbar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      activePage: Object,
+      _activePage: Object,
       _appTools: Array,
       _pageTools: Object
     }
@@ -132,10 +132,11 @@ class AppToolbar extends connect(store)(LitElement) {
 
   stateChanged(state) {
     this._appTools = state.layout.appTools
+    this._activPage = state.route.activePage
   }
 
   updated(changedProps) {
-    if (changedProps.has('activePage')) {
+    if (changedProps.has('_activePage')) {
       // TODO active page가 바뀐 이후에도 아직 import(lazy loading)되지 않은 상황에서는
       // activePage.tools 결과가 undefined 이다.
       // 일단은, 100ms마다 계속 시도하는 것으로 하였으나, 더 좋은 방법이 있다면 개선한다.
@@ -143,7 +144,7 @@ class AppToolbar extends connect(store)(LitElement) {
       clearTimeout(this._timeout)
 
       var _ = () => {
-        this._pageTools = this.activePage && this.activePage.tools
+        this._pageTools = this._activePage && this._activePage.tools
         if (!this._pageTools) {
           this._timeout = setTimeout(_, 100)
         }
