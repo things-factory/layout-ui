@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element'
 
 import { connect } from 'pwa-helpers/connect-mixin.js'
-import { store, HOMEPAGE } from '@things-factory/shell'
+import { store } from '@things-factory/shell'
 
 import './app-toolbar'
 
@@ -36,17 +36,18 @@ class HeaderBar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._page = state.app.page
+    this._page = state.route.page
+    this._defaultPage = state.route.defaultRoutePage
   }
 
   _isHome() {
     // TODO.. 정확한 방법 또는 을 찾아야 한다.
-    if (this._page == HOMEPAGE) {
+    if (this._page == this._defaultPage) {
       return true
     }
 
     var pathname = location.pathname
-    if (pathname == '/' || pathname.startsWith(`/${HOMEPAGE}`)) {
+    if (pathname == '/' || pathname.startsWith(`/${this._defaultPage}`)) {
       return true
     }
 
