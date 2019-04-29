@@ -6,12 +6,14 @@ import '@material/mwc-button/mwc-button'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
+import './page-context-bar'
+
 import './snack-bar'
 
 class FooterBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _footers: Array,
+      _page: String,
       _message: String,
       _snackbarOpened: Boolean
     }
@@ -30,21 +32,14 @@ class FooterBar extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <slot> </slot>
-
-      ${this._footers.map(
-        footers =>
-          html`
-            ${footers.template}
-          `
-      )}
+      <page-context-bar></page-context-bar>
 
       <snack-bar ?active=${this._snackbarOpened}>${this._message}</snack-bar>
     `
   }
 
   stateChanged(state) {
-    this._footers = state.layout.footers || []
+    this._page = state.app.page
 
     this._message = state.snackbar.message
     this._snackbarOpened = state.snackbar.snackbarOpened

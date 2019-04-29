@@ -23,12 +23,12 @@ class AppToolbar extends connect(store)(LitElement) {
           display: flex;
           background-color: var(--primary-dark-color);
           justify-content: space-between;
-          height: 45px;
+          height: var(--toolbar-height, 45px);
           padding: 0;
           color: var(--third-color);
         }
 
-        .padding {
+        [name='center'] {
           flex: 1;
         }
 
@@ -78,22 +78,23 @@ class AppToolbar extends connect(store)(LitElement) {
   render() {
     var appTools = this._appTools || []
 
-    var leftEndTools = appTools.filter(tool => tool.position == TOOL_POSITION.LEFT_END)
-    var leftTools = appTools.filter(tool => tool.position == TOOL_POSITION.LEFT)
-    var rightTools = appTools.filter(tool => tool.position == TOOL_POSITION.RIGHT)
-    var rightEndTools = appTools.filter(tool => tool.position == TOOL_POSITION.RIGHT_END)
+    var frontEndTools = appTools.filter(tool => tool.position == TOOL_POSITION.FRONT_END)
+    var frontTools = appTools.filter(tool => tool.position == TOOL_POSITION.FRONT)
+    var centerTools = appTools.filter(too => too.position == TOOL_POSITION.CENTER)
+    var rearTools = appTools.filter(tool => tool.position == TOOL_POSITION.REAR)
+    var rearEndTools = appTools.filter(tool => tool.position == TOOL_POSITION.REAR_END)
 
     return html`
-      <slot name="left-end"> </slot>
-      ${leftEndTools.map(
+      <slot name="front-end"> </slot>
+      ${frontEndTools.map(
         tool =>
           html`
             ${tool.template}
           `
       )}
 
-      <slot name="left"> </slot>
-      ${leftTools.map(
+      <slot name="front"> </slot>
+      ${frontTools.map(
         tool =>
           html`
             ${tool.template}
@@ -101,18 +102,24 @@ class AppToolbar extends connect(store)(LitElement) {
       )}
       ${this._pageTools || html``}
 
-      <span class="padding"></span>
-
-      <slot name="right"> </slot>
-      ${rightTools.map(
+      <slot name="center"> </slot>
+      ${centerTools.map(
         tool =>
           html`
             ${tool.template}
           `
       )}
 
-      <slot name="right-end"> </slot>
-      ${rightEndTools.map(
+      <slot name="rear"> </slot>
+      ${rearTools.map(
+        tool =>
+          html`
+            ${tool.template}
+          `
+      )}
+
+      <slot name="rear-end"> </slot>
+      ${rearEndTools.map(
         tool =>
           html`
             ${tool.template}
