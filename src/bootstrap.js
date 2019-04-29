@@ -19,7 +19,7 @@ export default function bootstrap() {
           >print</mwc-icon
         >
       `,
-      position: TOOL_POSITION.LEFT
+      position: TOOL_POSITION.FRONT
     }
   })
 }

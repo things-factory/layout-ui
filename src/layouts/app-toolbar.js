@@ -30,6 +30,8 @@ class AppToolbar extends connect(store)(LitElement) {
 
         [name='center'] {
           flex: 1;
+          justify-content: center;
+          align-items: center;
         }
 
         :host(*) {
