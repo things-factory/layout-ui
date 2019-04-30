@@ -10,9 +10,8 @@ import { TOOL_POSITION } from '@things-factory/layout-base'
 class AppToolbar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _activePage: Object,
-      _appTools: Array,
-      _pageTools: Object
+      _context: Object,
+      _appTools: Array
     }
   }
 
@@ -39,7 +38,7 @@ class AppToolbar extends connect(store)(LitElement) {
           padding: 0 10px 0 10px;
         }
 
-        slotted(*) {
+        ::slotted(*) {
           align-items: center;
         }
 
@@ -102,9 +101,14 @@ class AppToolbar extends connect(store)(LitElement) {
             ${tool.template}
           `
       )}
-      ${this._pageTools || html``}
 
-      <slot name="center"> </slot>
+      <slot name="center">
+        ${this._title
+          ? html`
+              <label>${this._context && this._context.title}</label>
+            `
+          : html``}
+      </slot>
       ${centerTools.map(
         tool =>
           html`
@@ -132,30 +136,7 @@ class AppToolbar extends connect(store)(LitElement) {
 
   stateChanged(state) {
     this._appTools = state.layout.appTools
-    this._activePage = state.route.activePage
-  }
-
-  updated(changedProps) {
-    if (changedProps.has('_activePage')) {
-      // TODO active page가 바뀐 이후에도 아직 import(lazy loading)되지 않은 상황에서는
-      // activePage.tools 결과가 undefined 이다.
-      // 일단은, 100ms마다 계속 시도하는 것으로 하였으나, 더 좋은 방법이 있다면 개선한다.
-
-      clearTimeout(this._timeout)
-
-      var _ = () => {
-        this._pageTools = this._activePage && this._activePage.tools
-        if (!this._pageTools) {
-          this._timeout = setTimeout(_, 100)
-        }
-      }
-
-      _()
-    }
-  }
-
-  _onDrawerOpen(e) {
-    store.dispatch(updateDrawerState(true))
+    this._context = state.route.context
   }
 }
 
