@@ -103,9 +103,9 @@ class AppToolbar extends connect(store)(LitElement) {
       )}
 
       <slot name="center">
-        ${this._title
+        ${this._context
           ? html`
-              <label>${this._context && this._context.title}</label>
+              <label>${this._context.title}</label>
             `
           : html``}
       </slot>
