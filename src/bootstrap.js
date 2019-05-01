@@ -20,7 +20,19 @@ export default function bootstrap() {
         >
       `,
       position: TOOL_POSITION.FRONT,
-      context: 'print'
+      context: 'printable'
     }
   })
+
+  // import('./layout/page-context-bar')
+  // store.dispatch({
+  //   type: APPEND_FOOTERBAR,
+  //   footer: {
+  //     template: html`
+  //       <page-context-bar></page-context-bar>
+  //     `,
+  //     position: TOOL_POSITION.FRONT,
+  //     context: 'actions'
+  //   }
+  // })
 }
