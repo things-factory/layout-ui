@@ -11,28 +11,16 @@ export default function bootstrap() {
 
   import('../src/layouts')
 
-  store.dispatch({
-    type: APPEND_FOOTERBAR,
-    footer: {
-      template: html`
-        <mwc-icon style="padding: 10px; background-color: #CF4545; color: white;" @click=${e => console.log('test')}
-          >print</mwc-icon
-        >
-      `,
-      position: TOOL_POSITION.FRONT,
-      context: 'printable'
-    }
-  })
-
-  // import('./layout/page-context-bar')
   // store.dispatch({
   //   type: APPEND_FOOTERBAR,
   //   footer: {
   //     template: html`
-  //       <page-context-bar></page-context-bar>
+  //       <mwc-icon style="padding: 10px; background-color: #CF4545; color: white;" @click=${e => console.log('test')}
+  //         >print</mwc-icon
+  //       >
   //     `,
   //     position: TOOL_POSITION.FRONT,
-  //     context: 'actions'
+  //     context: 'printable'
   //   }
   // })
 }
