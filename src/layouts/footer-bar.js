@@ -5,6 +5,7 @@ import '@material/mwc-button/mwc-button'
 
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
+import { TOGGLE_PRINT_CONTEXT } from '@things-factory/print-base'
 
 import './page-action-context-bar'
 
@@ -17,7 +18,7 @@ class FooterBar extends connect(store)(LitElement) {
       _message: String,
       _snackbarOpened: Boolean,
       _footers: Array,
-      _actions: Array
+      _context: Object
     }
   }
 
@@ -26,7 +27,6 @@ class FooterBar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          flex-direction: column;
           border-top: 1px solid gray;
         }
       `
@@ -43,24 +43,22 @@ class FooterBar extends connect(store)(LitElement) {
 
     return html`
       <slot name="front"></slot>
-      ${frontContextTools.map(
-        tool => html`
-          <div @click="${this.onContextSelect}">
-            ${tool.template}
-          </div>
-        `
+      ${frontContextTools.map(tool =>
+        !tool.context || this._context[tool.context]
+          ? html`
+              ${tool.context.template}
+            `
+          : html``
       )}
 
       <slot name="rear"></slot>
-      ${rearContextTools.map(
-        tool => html`
-          <div @click="${this.onContextSelect}">
-            ${tool.template}
-          </div>
-        `
+      ${rearContextTools.map(tool =>
+        !tool.context || this._context[tool.context]
+          ? html`
+              ${tool.context.template}
+            `
+          : html``
       )}
-
-      <page-action-context-bar .actions="${this._actions}"></page-action-context-bar>
 
       <snack-bar ?active=${this._snackbarOpened}>${this._message}</snack-bar>
     `
@@ -73,7 +71,7 @@ class FooterBar extends connect(store)(LitElement) {
     this._snackbarOpened = state.snackbar.snackbarOpened
 
     this._footers = state.layout.footers
-    this._actions = state.route.context.actions || []
+    this._context = state.context
   }
 }
 
