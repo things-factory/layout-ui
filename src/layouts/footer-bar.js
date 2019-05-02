@@ -5,9 +5,8 @@ import '@material/mwc-button/mwc-button'
 
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
-import { TOGGLE_PRINT_CONTEXT } from '@things-factory/print-base'
 
-import './page-action-context-bar'
+import { TOOL_POSITION } from '@things-factory/layout-base'
 
 import './snack-bar'
 
@@ -35,10 +34,14 @@ class FooterBar extends connect(store)(LitElement) {
 
   render() {
     var frontContextTools = this._footers.filter(
-      tool => tool.position == TOOL_POSITION.FRONT_END || tool.position == TOOL_POSITION.FRONT
+      tool =>
+        (tool && tool.position && tool.position == TOOL_POSITION.FRONT_END) ||
+        (tool && tool.position && tool.position == TOOL_POSITION.FRONT)
     )
     var rearContextTools = this._footers.filter(
-      tool => tool.position == TOOL_POSITION.REAR_END || tool.position == TOOL_POSITION.REAR
+      tool =>
+        (tool && tool.position && tool.position == TOOL_POSITION.REAR_END) ||
+        (tool && tool.position && tool.position == TOOL_POSITION.REAR)
     )
 
     return html`
@@ -46,7 +49,7 @@ class FooterBar extends connect(store)(LitElement) {
       ${frontContextTools.map(tool =>
         !tool.context || this._context[tool.context]
           ? html`
-              ${tool.context.template}
+              ${tool.template}
             `
           : html``
       )}
@@ -55,7 +58,7 @@ class FooterBar extends connect(store)(LitElement) {
       ${rearContextTools.map(tool =>
         !tool.context || this._context[tool.context]
           ? html`
-              ${tool.context.template}
+              ${tool.template}
             `
           : html``
       )}
@@ -70,8 +73,8 @@ class FooterBar extends connect(store)(LitElement) {
     this._message = state.snackbar.message
     this._snackbarOpened = state.snackbar.snackbarOpened
 
-    this._footers = state.layout.footers
-    this._context = state.context
+    this._footers = (state.layout && state.layout.footers) || []
+    this._context = (state.route && state.route.context) || {}
   }
 }
 
