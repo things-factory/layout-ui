@@ -13,7 +13,6 @@ import './snack-bar'
 class FooterBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _page: String,
       _message: String,
       _snackbarOpened: Boolean,
       _footers: Array,
@@ -35,32 +34,33 @@ class FooterBar extends connect(store)(LitElement) {
   render() {
     var frontContextTools = this._footers.filter(
       tool =>
-        (tool && tool.position && tool.position == TOOL_POSITION.FRONT_END) ||
-        (tool && tool.position && tool.position == TOOL_POSITION.FRONT)
+        tool &&
+        tool.position &&
+        (tool.position == TOOL_POSITION.FRONT_END || tool.position == TOOL_POSITION.FRONT) &&
+        (!tool.context || this._context[tool.context])
     )
+
     var rearContextTools = this._footers.filter(
       tool =>
-        (tool && tool.position && tool.position == TOOL_POSITION.REAR_END) ||
-        (tool && tool.position && tool.position == TOOL_POSITION.REAR)
+        tool &&
+        tool.position &&
+        (tool.position == TOOL_POSITION.REAR_END || tool.position == TOOL_POSITION.REAR) &&
+        (!tool.context || this._context[tool.context])
     )
 
     return html`
       <slot name="front"></slot>
-      ${frontContextTools.map(tool =>
-        !tool.context || this._context[tool.context]
-          ? html`
-              ${tool.template}
-            `
-          : html``
+      ${frontContextTools.map(
+        tool => html`
+          ${tool.template}
+        `
       )}
 
       <slot name="rear"></slot>
-      ${rearContextTools.map(tool =>
-        !tool.context || this._context[tool.context]
-          ? html`
-              ${tool.template}
-            `
-          : html``
+      ${rearContextTools.map(
+        tool => html`
+          ${tool.template}
+        `
       )}
 
       <snack-bar ?active=${this._snackbarOpened}>${this._message}</snack-bar>
@@ -68,8 +68,6 @@ class FooterBar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._page = state.app.page
-
     this._message = state.snackbar.message
     this._snackbarOpened = state.snackbar.snackbarOpened
 
