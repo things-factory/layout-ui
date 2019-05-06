@@ -1,8 +1,5 @@
 import { LitElement, html, css } from 'lit-element'
 
-import '@material/mwc-icon/mwc-icon'
-import '@material/mwc-button/mwc-button'
-
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 import { TOOL_POSITION } from '@things-factory/layout-base'
