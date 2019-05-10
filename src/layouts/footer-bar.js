@@ -13,7 +13,10 @@ class FooterBar extends connect(store)(LitElement) {
       _message: String,
       _snackbarOpened: Boolean,
       _footers: Array,
-      _context: Object
+      _context: Object,
+      _overlayShow: Boolean,
+      _overlayTemplate: Object,
+      _footerHeight: Object
     }
   }
 
@@ -46,6 +49,12 @@ class FooterBar extends connect(store)(LitElement) {
     )
 
     return html`
+      <footer-overlay
+        .show="${this._overlayShow}"
+        .template="${this._overlayTemplate}"
+        .footerHeight="${this._footerHeight}"
+      ></footer-overlay>
+
       <slot name="front"></slot>
       ${frontContextTools.map(
         tool => html`
@@ -64,12 +73,21 @@ class FooterBar extends connect(store)(LitElement) {
     `
   }
 
+  updated(changedProps) {
+    if (changedProps.has('_overlayShow') && this._overlayShow) {
+      this._footerHeight = getComputedStyle(this).height
+    }
+  }
+
   stateChanged(state) {
     this._message = state.snackbar.message
     this._snackbarOpened = state.snackbar.snackbarOpened
 
     this._footers = (state.layout && state.layout.footers) || []
     this._context = (state.route && state.route.context) || {}
+
+    this._overlayShow = (state.layout.overlay && state.layout.overlay.show) || false
+    this._overlayTemplate = (state.layout.overlay && state.layout.overlay.template) || ''
   }
 }
 
