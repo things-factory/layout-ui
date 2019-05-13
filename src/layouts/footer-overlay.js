@@ -35,7 +35,7 @@ class FooterOverlay extends LitElement {
 
   render() {
     return html`
-      <div id="modal" ?hidden="${!this.show}">
+      <div id="modal" ?hidden="${!this.show}" @click="${this._toggleOverlay}">
         ${this.template}
       </div>
     `
@@ -44,6 +44,14 @@ class FooterOverlay extends LitElement {
   updated(changedProps) {
     if (changedProps.has('footerHeight')) {
       this.style.setProperty('--overlay-margin-bottom', this.footerHeight)
+    }
+  }
+
+  _toggleOverlay(event) {
+    if (event.target === event.currentTarget) {
+      store.dispatch({
+        type: TOGGLE_OVERLAY
+      })
     }
   }
 }
