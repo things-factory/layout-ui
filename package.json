@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/layout-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -31,7 +31,6 @@
     "@things-factory/auth-ui-session": "*",
     "@things-factory/board-ui": "*",
     "@things-factory/i18n-ui": "*",
-    "@things-factory/menu-provider": "*",
     "@things-factory/menu-ui": "*",
     "@things-factory/more-ui": "*",
     "@things-factory/offline-ui": "*",
