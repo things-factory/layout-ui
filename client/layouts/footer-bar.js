@@ -27,6 +27,9 @@ class FooterBar extends connect(store)(LitElement) {
           display: flex;
           border-top: 1px solid gray;
         }
+        .virtual-space {
+          flex: 1;
+        }
       `
     ]
   }
@@ -61,6 +64,8 @@ class FooterBar extends connect(store)(LitElement) {
           ${tool.template}
         `
       )}
+
+      <div class="virtual-space"></div>
 
       <slot name="rear"></slot>
       ${rearContextTools.map(
