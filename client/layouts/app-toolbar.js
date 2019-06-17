@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit-element'
 
+import '@material/mwc-icon'
+
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 import { TOOL_POSITION } from '@things-factory/layout-base'
@@ -8,7 +10,9 @@ class AppToolbar extends connect(store)(LitElement) {
   static get properties() {
     return {
       _context: Object,
-      _appTools: Array
+      _appTools: Array,
+      _page: String,
+      _defaultPage: String
     }
   }
 
@@ -83,13 +87,19 @@ class AppToolbar extends connect(store)(LitElement) {
     var rearEndTools = appTools.filter(tool => tool.position == TOOL_POSITION.REAR_END)
 
     return html`
-      <slot name="front-end"> </slot>
-      ${frontEndTools.map(
-        tool =>
-          html`
-            ${tool.template}
+      ${this._isHome()
+        ? html`
+            <slot name="front-end"> </slot>
+            ${frontEndTools.map(
+              tool =>
+                html`
+                  ${tool.template}
+                `
+            )}
           `
-      )}
+        : html`
+            <mwc-icon @click=${e => history.back()}>arrow_back</mwc-icon>
+          `}
 
       <slot name="front"> </slot>
       ${frontTools.map(
@@ -132,8 +142,19 @@ class AppToolbar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
+    this._page = state.route.page
+    this._defaultPage = state.route.defaultRoutePage
+
     this._appTools = state.layout.appTools
     this._context = state.route.context
+  }
+
+  _isHome() {
+    if (this._page == this._defaultPage) {
+      return true
+    }
+
+    return false
   }
 }
 

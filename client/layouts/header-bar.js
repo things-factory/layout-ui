@@ -7,9 +7,7 @@ import './app-toolbar'
 
 class HeaderBar extends connect(store)(LitElement) {
   static get properties() {
-    return {
-      _page: String
-    }
+    return {}
   }
 
   static get styles() {
@@ -25,33 +23,12 @@ class HeaderBar extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <app-toolbar>
-        ${this._isHome()
-          ? html``
-          : html`
-              <mwc-icon @click=${e => history.back()} slot="front-end">arrow_back</mwc-icon>
-            `}
-      </app-toolbar>
+      <app-toolbar> </app-toolbar>
     `
   }
 
   stateChanged(state) {
-    this._page = state.route.page
-    this._defaultPage = state.route.defaultRoutePage
-  }
-
-  _isHome() {
-    // TODO.. 정확한 방법 또는 을 찾아야 한다.
-    if (this._page == this._defaultPage) {
-      return true
-    }
-
-    var pathname = location.pathname
-    if (pathname == '/' || pathname.startsWith(`/${this._defaultPage}`)) {
-      return true
-    }
-
-    return false
+    // TODO header-bar 들을 가져와서 render 할 수 있게 한다.
   }
 }
 
