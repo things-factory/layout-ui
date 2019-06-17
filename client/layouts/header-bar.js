@@ -7,7 +7,9 @@ import './app-toolbar'
 
 class HeaderBar extends connect(store)(LitElement) {
   static get properties() {
-    return {}
+    return {
+      _headerbars: Array
+    }
   }
 
   static get styles() {
@@ -24,11 +26,18 @@ class HeaderBar extends connect(store)(LitElement) {
   render() {
     return html`
       <app-toolbar> </app-toolbar>
+
+      ${this._headerbars.map(
+        headerbar =>
+          html`
+            ${headerbar.template}
+          `
+      )}
     `
   }
 
   stateChanged(state) {
-    // TODO header-bar 들을 가져와서 render 할 수 있게 한다.
+    this._headerbars = state.layout.headerbars || []
   }
 }
 

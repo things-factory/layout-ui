@@ -6,7 +6,8 @@ import { store } from '@things-factory/shell'
 class AsideBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _asidebars: Array
+      _asidebars: Array,
+      _height: Number
     }
   }
 
@@ -18,9 +19,16 @@ class AsideBar extends connect(store)(LitElement) {
           flex-direction: column;
         }
 
+        *[asidebar] {
+          position: relative;
+          right: 0;
+          max-width: 70vw;
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
         *[hovering] {
           position: absolute;
-          right: 0;
         }
       `
     ]
@@ -33,12 +41,22 @@ class AsideBar extends connect(store)(LitElement) {
       ${this._asidebars.map(
         asidebar =>
           html`
-            <div ?hovering=${asidebar.hovering}>
+            <div ?hovering=${asidebar.hovering} style="height:${this._height}px;" asidebar>
               ${asidebar.template}
             </div>
           `
       )}
     `
+  }
+
+  firstUpdated() {
+    this._height = this.offsetHeight
+
+    const resizeObserver = new ResizeObserver(entry => {
+      this._height = this.offsetHeight
+    })
+
+    resizeObserver.observe(this)
   }
 
   stateChanged(state) {

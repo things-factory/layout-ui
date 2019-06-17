@@ -2,7 +2,7 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js'
 
 import { store } from '@things-factory/shell'
 
-import { updateLayout, OPEN_SNACKBAR } from '@things-factory/layout-base'
+import { updateLayout } from '@things-factory/layout-base'
 
 export default function bootstrap() {
   import('./layouts')
