@@ -3,6 +3,8 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
+import ResizeObserver from 'resize-observer-polyfill'
+
 class AsideBar extends connect(store)(LitElement) {
   static get properties() {
     return {
