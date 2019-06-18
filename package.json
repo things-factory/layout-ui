@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/layout-ui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -27,15 +27,6 @@
     "@things-factory/shell": "*"
   },
   "devDependencies": {
-    "@things-factory/board-ui": "*",
-    "@things-factory/i18n-ui": "*",
-    "@things-factory/menu-ui": "*",
-    "@things-factory/more-ui": "*",
-    "@things-factory/offline-ui": "*",
-    "@things-factory/print-ui": "*",
-    "@things-factory/resource-ui": "*",
-    "@things-factory/setting-ui": "*",
-    "@things-factory/system-ui": "*",
     "@things-factory/tester": "*"
   }
 }

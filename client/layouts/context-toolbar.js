@@ -33,7 +33,7 @@ class ContextToolbar extends connect(store)(LitElement) {
 
         :host(*) {
           align-items: center;
-          padding: 0 10px 0 10px;
+          padding: 0px;
         }
 
         ::slotted(*) {
