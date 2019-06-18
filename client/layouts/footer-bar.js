@@ -3,8 +3,8 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
-import { TOOL_POSITION } from '@things-factory/layout-base'
-
+import './footer-overlay'
+import './context-toolbar'
 import './snack-bar'
 
 class FooterBar extends connect(store)(LitElement) {
@@ -12,8 +12,7 @@ class FooterBar extends connect(store)(LitElement) {
     return {
       _message: String,
       _snackbarOpened: Boolean,
-      _footers: Array,
-      _context: Object,
+      _footerbars: Array,
       _overlayShow: Boolean,
       _overlayTemplate: Object,
       _footerHeight: Object
@@ -25,53 +24,33 @@ class FooterBar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
+          flex-direction: column;
+
           border-top: 1px solid gray;
-        }
-        .virtual-space {
-          flex: 1;
         }
       `
     ]
   }
 
   render() {
-    var frontContextTools = this._footers.filter(
-      tool =>
-        tool &&
-        tool.position &&
-        (tool.position == TOOL_POSITION.FRONT_END || tool.position == TOOL_POSITION.FRONT) &&
-        (!tool.context || this._context[tool.context])
-    )
-
-    var rearContextTools = this._footers.filter(
-      tool =>
-        tool &&
-        tool.position &&
-        (tool.position == TOOL_POSITION.REAR_END || tool.position == TOOL_POSITION.REAR) &&
-        (!tool.context || this._context[tool.context])
-    )
-
     return html`
       <footer-overlay
         .show="${this._overlayShow}"
         .template="${this._overlayTemplate}"
         .footerHeight="${this._footerHeight}"
+        hovering
+        footerbar
       ></footer-overlay>
 
-      <slot name="front"></slot>
-      ${frontContextTools.map(
-        tool => html`
-          ${tool.template}
-        `
-      )}
+      <context-toolbar></context-toolbar>
 
-      <div class="virtual-space"></div>
-
-      <slot name="rear"></slot>
-      ${rearContextTools.map(
-        tool => html`
-          ${tool.template}
-        `
+      ${this._footerbars.map(
+        footerbar =>
+          html`
+            <div ?hovering=${footerbar.hovering} style="height:${this._height}px;" footerbar>
+              ${footerbar.template}
+            </div>
+          `
       )}
 
       <snack-bar ?active=${this._snackbarOpened}>${this._message}</snack-bar>
@@ -88,8 +67,7 @@ class FooterBar extends connect(store)(LitElement) {
     this._message = state.snackbar.message
     this._snackbarOpened = state.snackbar.snackbarOpened
 
-    this._footers = (state.layout && state.layout.footers) || []
-    this._context = (state.route && state.route.context) || {}
+    this._footerbars = (state.layout && state.layout.footers) || []
 
     this._overlayShow = (state.layout.overlay && state.layout.overlay.show) || false
     this._overlayTemplate = (state.layout.overlay && state.layout.overlay.template) || ''
