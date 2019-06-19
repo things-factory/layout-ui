@@ -75,13 +75,16 @@ class ContextToolbar extends connect(store)(LitElement) {
   }
 
   render() {
-    var contextTools = this._contextTools || []
+    let contextKeys = Object.keys(this._context)
+    let contextTools = (this._contextTools || []).filter(tool => {
+      if (contextKeys.includes(tool.context)) return tool
+    })
 
-    var frontEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.FRONT_END)
-    var frontTools = contextTools.filter(tool => tool.position == TOOL_POSITION.FRONT)
-    var centerTools = contextTools.filter(too => too.position == TOOL_POSITION.CENTER)
-    var rearTools = contextTools.filter(tool => tool.position == TOOL_POSITION.REAR)
-    var rearEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.REAR_END)
+    let frontEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.FRONT_END)
+    let frontTools = contextTools.filter(tool => tool.position == TOOL_POSITION.FRONT)
+    let centerTools = contextTools.filter(too => too.position == TOOL_POSITION.CENTER)
+    let rearTools = contextTools.filter(tool => tool.position == TOOL_POSITION.REAR)
+    let rearEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.REAR_END)
 
     return html`
       <slot name="front-end"> </slot>
