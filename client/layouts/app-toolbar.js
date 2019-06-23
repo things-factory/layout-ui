@@ -28,8 +28,13 @@ class AppToolbar extends connect(store)(LitElement) {
           color: var(--third-color);
         }
 
-        [name='center'] {
+        [center] {
           flex: 1;
+          justify-content: center;
+          align-items: center;
+        }
+
+        [center] > * {
           justify-content: center;
           align-items: center;
         }
@@ -82,7 +87,7 @@ class AppToolbar extends connect(store)(LitElement) {
 
     var frontEndTools = appTools.filter(tool => tool.position == TOOL_POSITION.FRONT_END)
     var frontTools = appTools.filter(tool => tool.position == TOOL_POSITION.FRONT)
-    var centerTools = appTools.filter(too => too.position == TOOL_POSITION.CENTER)
+    var centerTools = appTools.filter(tool => tool.position == TOOL_POSITION.CENTER)
     var rearTools = appTools.filter(tool => tool.position == TOOL_POSITION.REAR)
     var rearEndTools = appTools.filter(tool => tool.position == TOOL_POSITION.REAR_END)
 
@@ -109,19 +114,21 @@ class AppToolbar extends connect(store)(LitElement) {
           `
       )}
 
-      <slot name="center">
-        ${this._context
-          ? html`
-              <label>${this._context.title}</label>
+      <div center>
+        <slot name="center">
+          ${this._context
+            ? html`
+                <label>${this._context.title}</label>
+              `
+            : html``}
+        </slot>
+        ${centerTools.map(
+          tool =>
+            html`
+              ${tool.template}
             `
-          : html``}
-      </slot>
-      ${centerTools.map(
-        tool =>
-          html`
-            ${tool.template}
-          `
-      )}
+        )}
+      </div>
 
       <slot name="rear"> </slot>
       ${rearTools.map(

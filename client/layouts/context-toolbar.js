@@ -25,8 +25,13 @@ class ContextToolbar extends connect(store)(LitElement) {
           color: var(--context-toolbar-color, #d6cec2);
         }
 
-        [name='center'] {
+        [center] {
           flex: 1;
+          justify-content: center;
+          align-items: center;
+        }
+
+        [center] > * {
           justify-content: center;
           align-items: center;
         }
@@ -82,7 +87,7 @@ class ContextToolbar extends connect(store)(LitElement) {
 
     let frontEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.FRONT_END)
     let frontTools = contextTools.filter(tool => tool.position == TOOL_POSITION.FRONT)
-    let centerTools = contextTools.filter(too => too.position == TOOL_POSITION.CENTER)
+    let centerTools = contextTools.filter(tool => tool.position == TOOL_POSITION.CENTER)
     let rearTools = contextTools.filter(tool => tool.position == TOOL_POSITION.REAR)
     let rearEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.REAR_END)
 
@@ -103,13 +108,15 @@ class ContextToolbar extends connect(store)(LitElement) {
           `
       )}
 
-      <slot name="center"> </slot>
-      ${centerTools.map(
-        tool =>
-          html`
-            ${tool.template}
-          `
-      )}
+      <div center>
+        <slot name="center"> </slot>
+        ${centerTools.map(
+          tool =>
+            html`
+              ${tool.template}
+            `
+        )}
+      </div>
 
       <slot name="rear"> </slot>
       ${rearTools.map(
