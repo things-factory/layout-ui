@@ -3,13 +3,10 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
-import ResizeObserver from 'resize-observer-polyfill'
-
 class AsideBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _asidebars: Array,
-      _height: Number
+      _asidebars: Array
     }
   }
 
@@ -19,12 +16,16 @@ class AsideBar extends connect(store)(LitElement) {
         :host {
           display: flex;
           flex-direction: column;
+          align-items: stretch;
+
+          position: relative;
         }
 
         *[asidebar] {
           position: relative;
           right: 0;
           max-width: 70vw;
+          height: 100%;
           overflow-x: hidden;
           overflow-y: auto;
         }
@@ -43,22 +44,12 @@ class AsideBar extends connect(store)(LitElement) {
       ${this._asidebars.map(
         asidebar =>
           html`
-            <div ?hovering=${asidebar.hovering} style="height:${this._height}px;" asidebar>
+            <div ?hovering=${asidebar.hovering} asidebar>
               ${asidebar.template}
             </div>
           `
       )}
     `
-  }
-
-  firstUpdated() {
-    this._height = this.offsetHeight
-
-    const resizeObserver = new ResizeObserver(entry => {
-      this._height = this.offsetHeight
-    })
-
-    resizeObserver.observe(this)
   }
 
   stateChanged(state) {
