@@ -82,7 +82,7 @@ class ContextToolbar extends connect(store)(LitElement) {
   render() {
     let contextKeys = Object.keys(this._context)
     let contextTools = (this._contextTools || []).filter(tool => {
-      if (contextKeys.includes(tool.context)) return tool
+      if (!tool.context || contextKeys.includes(tool.context)) return tool
     })
 
     let frontEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.FRONT_END)
