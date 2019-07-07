@@ -10,8 +10,7 @@ import './snack-bar'
 class FooterBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _message: String,
-      _snackbarOpened: Boolean,
+      _snackbar: Object,
       _footerbars: Array,
       _overlayShow: Boolean,
       _overlayTemplate: Object,
@@ -53,7 +52,12 @@ class FooterBar extends connect(store)(LitElement) {
           `
       )}
 
-      <snack-bar ?active=${this._snackbarOpened}>${this._message}</snack-bar>
+      <snack-bar
+        ?active=${this._snackbar.snackbarOpened}
+        .level=${this._snackbar.level}
+        .message=${this._snackbar.message}
+      >
+      </snack-bar>
     `
   }
 
@@ -64,9 +68,7 @@ class FooterBar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._message = state.snackbar.message
-    this._snackbarOpened = state.snackbar.snackbarOpened
-
+    this._snackbar = state.snackbar
     this._footerbars = (state.layout && state.layout.footers) || []
 
     this._overlayShow = (state.layout.overlay && state.layout.overlay.show) || false

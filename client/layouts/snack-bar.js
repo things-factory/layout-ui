@@ -1,9 +1,13 @@
 import { LitElement, html, css } from 'lit-element'
 
+import '@material/mwc-icon'
+
 class SnackBar extends LitElement {
   static get properties() {
     return {
-      active: { type: Boolean }
+      level: String,
+      message: String,
+      active: Boolean
     }
   }
 
@@ -33,6 +37,24 @@ class SnackBar extends LitElement {
           transform: translate3d(0, -100%, 0);
         }
 
+        mwc-icon {
+          --mdc-icon-size: 1.2em;
+          vertical-align: middle;
+          max-width: 20px;
+        }
+
+        .info {
+          color: green;
+        }
+
+        .warn {
+          color: yellow;
+        }
+
+        .error {
+          color: red;
+        }
+
         @media (min-width: 460px) {
           :host {
             width: 320px;
@@ -45,7 +67,24 @@ class SnackBar extends LitElement {
 
   render() {
     return html`
-      <slot></slot>
+      <span>
+        <mwc-icon class=${this.level}
+          >${this.level == 'info'
+            ? html`
+                notification_important
+              `
+            : this.level == 'warn'
+            ? html`
+                warning
+              `
+            : this.level == 'error'
+            ? html`
+                error
+              `
+            : html``}</mwc-icon
+        >
+      </span>
+      <span>${this.message}</span>
     `
   }
 }
