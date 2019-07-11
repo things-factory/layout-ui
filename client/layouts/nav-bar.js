@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element'
 
 import { connect } from 'pwa-helpers/connect-mixin.js'
-import { store } from '@things-factory/shell'
+import { store, ScrollbarStyles } from '@things-factory/shell'
 
 class NavBar extends connect(store)(LitElement) {
   static get properties() {
@@ -12,6 +12,7 @@ class NavBar extends connect(store)(LitElement) {
 
   static get styles() {
     return [
+      ScrollbarStyles,
       css`
         :host {
           display: flex;
@@ -19,6 +20,8 @@ class NavBar extends connect(store)(LitElement) {
           align-items: stretch;
 
           position: relative;
+
+          overflow: hidden;
         }
 
         *[navbar] {
@@ -26,8 +29,8 @@ class NavBar extends connect(store)(LitElement) {
           left: 0;
           max-width: 70vw;
           height: 100%;
-          overflow-x: hidden;
-          overflow-y: auto;
+
+          overflow: auto;
         }
 
         *[hovering] {
