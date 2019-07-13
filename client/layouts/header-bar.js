@@ -18,7 +18,7 @@ class HeaderBar extends connect(store)(LitElement) {
         :host {
           display: flex;
           flex-direction: column;
-          background-color: var(--primary-background-color);
+          background-color: var(--header-bar-background-color);
         }
       `
     ]

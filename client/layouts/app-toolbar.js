@@ -22,7 +22,7 @@ class AppToolbar extends connect(store)(LitElement) {
         :host {
           display: flex;
           justify-content: space-between;
-          height: var(--header-bar-height);
+          height: var(--header-bar-height, 45px);
           padding: 0;
           color: var(--header-bar-color);
         }
