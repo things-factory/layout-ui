@@ -20,8 +20,6 @@ class AsideBar extends connect(store)(LitElement) {
           align-items: stretch;
 
           position: relative;
-
-          overflow: hidden;
         }
 
         *[asidebar] {
