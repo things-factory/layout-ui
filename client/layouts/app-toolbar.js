@@ -21,11 +21,10 @@ class AppToolbar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          background-color: var(--primary-dark-color);
           justify-content: space-between;
-          height: var(--toolbar-height, 45px);
+          height: var(--header-bar-height);
           padding: 0;
-          color: var(--third-color);
+          color: var(--header-bar-color);
         }
 
         [center] {

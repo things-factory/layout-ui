@@ -22,7 +22,6 @@ class ContextToolbar extends connect(store)(LitElement) {
           background-color: var(--context-toolbar-background-color, white);
           justify-content: space-between;
           padding: 0;
-          color: var(--context-toolbar-color, #d6cec2);
         }
 
         [center] {
