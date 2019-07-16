@@ -26,8 +26,8 @@ class FooterOverlay extends LitElement {
           right: 0;
           top: 0;
           bottom: 0;
-          background-color: rgba(0, 0, 0, 0.5);
-          margin-bottom: var(--overlay-margin-bottom, 0px);
+          background-color: var(--overlay-background-color);
+          margin-bottom: var(--overlay-margin-bottom);
         }
       `
     ]

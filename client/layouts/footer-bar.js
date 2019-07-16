@@ -25,7 +25,7 @@ class FooterBar extends connect(store)(LitElement) {
           display: flex;
           flex-direction: column;
 
-          border-top: 1px solid gray;
+          border-top: var(--footer-bar-border-top);
         }
       `
     ]

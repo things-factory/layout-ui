@@ -19,7 +19,7 @@ class ContextToolbar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          background-color: var(--context-toolbar-background-color, white);
+          background-color: var(--context-toolbar-background-color);
           justify-content: space-between;
           padding: 0;
         }
