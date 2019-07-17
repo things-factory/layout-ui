@@ -19,6 +19,8 @@ class ContextToolbar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
+          position: relative;
+
           background-color: var(--context-toolbar-background-color);
           justify-content: space-between;
           padding: 0;
@@ -74,6 +76,12 @@ class ContextToolbar extends connect(store)(LitElement) {
         span.space {
           width: 10px;
         }
+
+        #float {
+          position: absolute;
+
+          width: 100%;
+        }
       `
     ]
   }
@@ -91,6 +99,8 @@ class ContextToolbar extends connect(store)(LitElement) {
     let rearEndTools = contextTools.filter(tool => tool.position == TOOL_POSITION.REAR_END)
 
     return html`
+      <div id="float"></div>
+
       <slot name="front-end"> </slot>
       ${frontEndTools.map(
         tool =>

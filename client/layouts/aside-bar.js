@@ -16,7 +16,7 @@ class AsideBar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          flex-direction: column;
+          flex-direction: row-reverse;
           align-items: stretch;
 
           position: relative;

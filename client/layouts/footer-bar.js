@@ -3,9 +3,10 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
-import './footer-overlay'
 import './context-toolbar'
 import './snack-bar'
+
+import '../components/floating-overlay'
 
 class FooterBar extends connect(store)(LitElement) {
   static get properties() {
@@ -13,8 +14,7 @@ class FooterBar extends connect(store)(LitElement) {
       _snackbar: Object,
       _footerbars: Array,
       _overlayShow: Boolean,
-      _overlayTemplate: Object,
-      _footerHeight: Object
+      _overlayTemplate: Object
     }
   }
 
@@ -23,9 +23,22 @@ class FooterBar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          flex-direction: column;
+          flex-flow: column-reverse nowrap;
+          align-items: stretch;
 
-          border-top: var(--footer-bar-border-top);
+          position: relative;
+        }
+
+        *[footerbar] {
+          display: block;
+        }
+
+        *[hovering] {
+          position: absolute;
+        }
+
+        [hidden] {
+          display: none;
         }
       `
     ]
@@ -33,20 +46,23 @@ class FooterBar extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <footer-overlay
-        .show="${this._overlayShow}"
-        .template="${this._overlayTemplate}"
-        .footerHeight="${this._footerHeight}"
-        hovering
-        footerbar
-      ></footer-overlay>
-
       <context-toolbar></context-toolbar>
+
+      <floating-overlay
+        ?hidden=${!this._overlayShow}
+        backdrop="true"
+        direction="up"
+        @close-overlay=${e => {
+          this._overlayShow = false
+        }}
+        footerbar
+        >${this._overlayTemplate}</floating-overlay
+      >
 
       ${this._footerbars.map(
         footerbar =>
           html`
-            <div ?hovering=${footerbar.hovering} style="height:${this._height}px;" footerbar>
+            <div ?hovering=${footerbar.hovering} footerbar>
               ${footerbar.template}
             </div>
           `
@@ -63,7 +79,6 @@ class FooterBar extends connect(store)(LitElement) {
 
   updated(changedProps) {
     if (changedProps.has('_overlayShow') && this._overlayShow) {
-      this._footerHeight = getComputedStyle(this).height
     }
   }
 
