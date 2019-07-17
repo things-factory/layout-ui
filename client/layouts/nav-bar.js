@@ -16,7 +16,7 @@ class NavBar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          flex-flow: column nowrap;
+          flex-flow: row nowrap;
           align-items: stretch;
 
           position: relative;

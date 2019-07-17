@@ -3,10 +3,7 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
-import './context-toolbar'
 import './snack-bar'
-
-import '../components/floating-overlay'
 
 class FooterBar extends connect(store)(LitElement) {
   static get properties() {
@@ -36,29 +33,12 @@ class FooterBar extends connect(store)(LitElement) {
         *[hovering] {
           position: absolute;
         }
-
-        [hidden] {
-          display: none;
-        }
       `
     ]
   }
 
   render() {
     return html`
-      <context-toolbar></context-toolbar>
-
-      <floating-overlay
-        ?hidden=${!this._overlayShow}
-        backdrop="true"
-        direction="up"
-        @close-overlay=${e => {
-          this._overlayShow = false
-        }}
-        footerbar
-        >${this._overlayTemplate}</floating-overlay
-      >
-
       ${this._footerbars.map(
         footerbar =>
           html`

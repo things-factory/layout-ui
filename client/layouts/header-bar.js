@@ -17,7 +17,11 @@ class HeaderBar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          flex-direction: column;
+          flex-flow: column nowrap;
+          align-items: stretch;
+
+          position: relative;
+
           background-color: var(--header-bar-background-color);
         }
       `
