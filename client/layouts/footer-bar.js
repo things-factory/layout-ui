@@ -9,9 +9,7 @@ class FooterBar extends connect(store)(LitElement) {
   static get properties() {
     return {
       _snackbar: Object,
-      _footerbars: Array,
-      _overlayShow: Boolean,
-      _overlayTemplate: Object
+      _footerbars: Array
     }
   }
 
@@ -57,17 +55,9 @@ class FooterBar extends connect(store)(LitElement) {
     `
   }
 
-  updated(changedProps) {
-    if (changedProps.has('_overlayShow') && this._overlayShow) {
-    }
-  }
-
   stateChanged(state) {
     this._snackbar = state.snackbar
-    this._footerbars = (state.layout && state.layout.footers) || []
-
-    this._overlayShow = (state.layout.overlay && state.layout.overlay.show) || false
-    this._overlayTemplate = (state.layout.overlay && state.layout.overlay.template) || ''
+    this._footerbars = (state.layout && state.layout.footerbars) || []
   }
 }
 
