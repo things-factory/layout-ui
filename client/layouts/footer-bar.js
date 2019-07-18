@@ -3,6 +3,7 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
+import '../components/floating-overlay'
 import './snack-bar'
 
 class FooterBar extends connect(store)(LitElement) {
@@ -40,9 +41,17 @@ class FooterBar extends connect(store)(LitElement) {
       ${this._footerbars.map(
         footerbar =>
           html`
-            <div ?hovering=${footerbar.hovering} footerbar>
-              ${footerbar.template}
-            </div>
+            ${footerbar.hovering
+              ? html`
+                  <floating-overlay .backdrop=${footerbar.backdrop} direction="up" .hovering=${this.hovering}
+                    >${footerbar.template}</floating-overlay
+                  >
+                `
+              : html`
+                  <div footerbar>
+                    ${footerbar.template}
+                  </div>
+                `}
           `
       )}
 

@@ -3,6 +3,8 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store, ScrollbarStyles } from '@things-factory/shell'
 
+import '../components/floating-overlay'
+
 class NavBar extends connect(store)(LitElement) {
   static get properties() {
     return {
@@ -43,15 +45,20 @@ class NavBar extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <slot> </slot>
-
       ${this._navbars.map(
-        navbar =>
-          html`
-            <div ?hovering=${navbar.hovering} navbar>
-              ${navbar.template}
-            </div>
-          `
+        navbar => html`
+          ${navbar.hovering
+            ? html`
+                <floating-overlay .backdrop=${navbar.backdrop} direction="right" .hovering=${this.hovering}
+                  >${navbar.template}</floating-overlay
+                >
+              `
+            : html`
+                <div navbar>
+                  ${navbar.template}
+                </div>
+              `}
+        `
       )}
     `
   }

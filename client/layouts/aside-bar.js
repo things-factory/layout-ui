@@ -3,6 +3,8 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store, ScrollbarStyles } from '@things-factory/shell'
 
+import '../components/floating-overlay'
+
 class AsideBar extends connect(store)(LitElement) {
   static get properties() {
     return {
@@ -43,12 +45,19 @@ class AsideBar extends connect(store)(LitElement) {
       <slot> </slot>
 
       ${this._asidebars.map(
-        asidebar =>
-          html`
-            <div ?hovering=${asidebar.hovering} asidebar>
-              ${asidebar.template}
-            </div>
-          `
+        asidebar => html`
+          ${asidebar.hovering
+            ? html`
+                <floating-overlay .backdrop=${asidebar.backdrop} direction="left" .hovering=${this.hovering}
+                  >${asidebar.template}</floating-overlay
+                >
+              `
+            : html`
+                <div asidebar>
+                  ${asidebar.template}
+                </div>
+              `}
+        `
       )}
     `
   }

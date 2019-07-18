@@ -4,6 +4,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
 import './app-toolbar'
+import '../components/floating-overlay'
 
 class HeaderBar extends connect(store)(LitElement) {
   static get properties() {
@@ -33,10 +34,19 @@ class HeaderBar extends connect(store)(LitElement) {
       <app-toolbar> </app-toolbar>
 
       ${this._headerbars.map(
-        headerbar =>
-          html`
-            ${headerbar.template}
-          `
+        headerbar => html`
+          ${headerbar.hovering
+            ? html`
+                <floating-overlay .backdrop=${headerbar.backdrop} direction="down" .hovering=${this.hovering}
+                  >${headerbar.template}</floating-overlay
+                >
+              `
+            : html`
+                <div headerbar>
+                  ${headerbar.template}
+                </div>
+              `}
+        `
       )}
     `
   }

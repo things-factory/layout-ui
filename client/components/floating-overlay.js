@@ -4,7 +4,8 @@ class FloatingOverlay extends LitElement {
   static get properties() {
     return {
       backdrop: Boolean,
-      direction: String
+      direction: String,
+      hovering: String
     }
   }
 
@@ -29,6 +30,10 @@ class FloatingOverlay extends LitElement {
         slot {
           display: block;
           position: absolute;
+        }
+
+        slot[hovering='edge'] {
+          position: fixed;
         }
 
         slot[direction='down'] {
@@ -70,12 +75,13 @@ class FloatingOverlay extends LitElement {
           `
         : html``}
 
-      <slot direction=${this.direction}> </slot>
+      <slot direction=${this.direction} hovering=${this.hovering || 'next'}> </slot>
     `
   }
 
   onBackdropClick(event) {
-    this.dispatchEvent(new CustomEvent('close-overlay'))
+    history.back()
+    // this.dispatchEvent(new CustomEvent('close-overlay'))
   }
 }
 
