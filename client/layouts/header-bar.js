@@ -3,7 +3,6 @@ import { LitElement, html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
-import './app-toolbar'
 import '../components/floating-overlay'
 
 class HeaderBar extends connect(store)(LitElement) {
@@ -31,8 +30,6 @@ class HeaderBar extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <app-toolbar> </app-toolbar>
-
       ${this._headerbars.map(
         headerbar => html`
           ${headerbar.hovering

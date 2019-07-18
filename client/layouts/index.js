@@ -1,4 +1,3 @@
-import './app-toolbar'
 import './snack-bar'
 
 import './header-bar'
