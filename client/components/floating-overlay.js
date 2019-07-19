@@ -14,6 +14,7 @@ class FloatingOverlay extends LitElement {
       css`
         :host {
           position: relative;
+          z-index: 1;
         }
 
         #backdrop {
