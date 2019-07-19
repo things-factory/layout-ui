@@ -8,7 +8,7 @@ import '../components/floating-overlay'
 class HeaderBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _headerbars: Array
+      viewparts: Array
     }
   }
 
@@ -29,27 +29,32 @@ class HeaderBar extends connect(store)(LitElement) {
   }
 
   render() {
+    var viewparts = this.viewparts
+    var headerbars = Object.keys(viewparts)
+      .map(name => viewparts[name])
+      .filter(viewpart => viewpart.type == 'headerbar')
+
     return html`
-      ${this._headerbars.map(
-        headerbar => html`
-          ${headerbar.hovering
-            ? html`
-                <floating-overlay .backdrop=${headerbar.backdrop} direction="down" .hovering=${this.hovering}
-                  >${headerbar.template}</floating-overlay
-                >
-              `
-            : html`
-                <div headerbar>
-                  ${headerbar.template}
-                </div>
-              `}
-        `
+      ${headerbars.map(headerbar =>
+        !headerbar.show
+          ? html``
+          : headerbar.hovering
+          ? html`
+              <floating-overlay .backdrop=${headerbar.backdrop} direction="down" .hovering=${this.hovering}
+                >${headerbar.template}</floating-overlay
+              >
+            `
+          : html`
+              <div headerbar>
+                ${headerbar.template}
+              </div>
+            `
       )}
     `
   }
 
   stateChanged(state) {
-    this._headerbars = state.layout.headerbars || []
+    this.viewparts = state.layout.viewparts || {}
   }
 }
 

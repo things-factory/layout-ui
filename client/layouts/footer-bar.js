@@ -10,7 +10,7 @@ class FooterBar extends connect(store)(LitElement) {
   static get properties() {
     return {
       _snackbar: Object,
-      _footerbars: Array
+      viewparts: Array
     }
   }
 
@@ -37,22 +37,26 @@ class FooterBar extends connect(store)(LitElement) {
   }
 
   render() {
+    var viewparts = this.viewparts
+    var footerbars = Object.keys(viewparts)
+      .map(name => viewparts[name])
+      .filter(viewpart => viewpart.type == 'footerbar')
+
     return html`
-      ${this._footerbars.map(
-        footerbar =>
-          html`
-            ${footerbar.hovering
-              ? html`
-                  <floating-overlay .backdrop=${footerbar.backdrop} direction="up" .hovering=${this.hovering}
-                    >${footerbar.template}</floating-overlay
-                  >
-                `
-              : html`
-                  <div footerbar>
-                    ${footerbar.template}
-                  </div>
-                `}
-          `
+      ${footerbars.map(footerbar =>
+        !footerbar.show
+          ? html``
+          : footerbar.hovering
+          ? html`
+              <floating-overlay .backdrop=${footerbar.backdrop} direction="up" .hovering=${this.hovering}
+                >${footerbar.template}</floating-overlay
+              >
+            `
+          : html`
+              <div footerbar>
+                ${footerbar.template}
+              </div>
+            `
       )}
 
       <snack-bar
@@ -66,7 +70,8 @@ class FooterBar extends connect(store)(LitElement) {
 
   stateChanged(state) {
     this._snackbar = state.snackbar
-    this._footerbars = (state.layout && state.layout.footerbars) || []
+
+    this.viewparts = state.layout.viewparts || {}
   }
 }
 

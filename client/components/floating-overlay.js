@@ -81,7 +81,6 @@ class FloatingOverlay extends LitElement {
 
   onBackdropClick(event) {
     history.back()
-    // this.dispatchEvent(new CustomEvent('close-overlay'))
   }
 }
 

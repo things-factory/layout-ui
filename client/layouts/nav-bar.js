@@ -8,7 +8,7 @@ import '../components/floating-overlay'
 class NavBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _navbars: Array
+      viewparts: Array
     }
   }
 
@@ -44,27 +44,32 @@ class NavBar extends connect(store)(LitElement) {
   }
 
   render() {
+    var viewparts = this.viewparts
+    var navbars = Object.keys(viewparts)
+      .map(name => viewparts[name])
+      .filter(viewpart => viewpart.type == 'navbar')
+
     return html`
-      ${this._navbars.map(
-        navbar => html`
-          ${navbar.hovering
-            ? html`
-                <floating-overlay .backdrop=${navbar.backdrop} direction="right" .hovering=${this.hovering}
-                  >${navbar.template}</floating-overlay
-                >
-              `
-            : html`
-                <div navbar>
-                  ${navbar.template}
-                </div>
-              `}
-        `
+      ${navbars.map(navbar =>
+        !navbar.show
+          ? html``
+          : navbar.hovering
+          ? html`
+              <floating-overlay .backdrop=${navbar.backdrop} direction="right" .hovering=${this.hovering}
+                >${navbar.template}</floating-overlay
+              >
+            `
+          : html`
+              <div navbar>
+                ${navbar.template}
+              </div>
+            `
       )}
     `
   }
 
   stateChanged(state) {
-    this._navbars = state.layout.navbars || []
+    this.viewparts = state.layout.viewparts || {}
   }
 }
 

@@ -8,7 +8,7 @@ import '../components/floating-overlay'
 class AsideBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _asidebars: Array
+      viewparts: Array
     }
   }
 
@@ -41,29 +41,32 @@ class AsideBar extends connect(store)(LitElement) {
   }
 
   render() {
-    return html`
-      <slot> </slot>
+    var viewparts = this.viewparts
+    var asidebars = Object.keys(viewparts)
+      .map(name => viewparts[name])
+      .filter(viewpart => viewpart.type == 'asidebar')
 
-      ${this._asidebars.map(
-        asidebar => html`
-          ${asidebar.hovering
-            ? html`
-                <floating-overlay .backdrop=${asidebar.backdrop} direction="left" .hovering=${this.hovering}
-                  >${asidebar.template}</floating-overlay
-                >
-              `
-            : html`
-                <div asidebar>
-                  ${asidebar.template}
-                </div>
-              `}
-        `
+    return html`
+      ${asidebars.map(asidebar =>
+        !asidebar.show
+          ? html``
+          : asidebar.hovering
+          ? html`
+              <floating-overlay .backdrop=${asidebar.backdrop} direction="left" .hovering=${this.hovering}
+                >${asidebar.template}</floating-overlay
+              >
+            `
+          : html`
+              <div asidebar>
+                ${asidebar.template}
+              </div>
+            `
       )}
     `
   }
 
   stateChanged(state) {
-    this._asidebars = state.layout.asidebars || []
+    this.viewparts = state.layout.viewparts || {}
   }
 }
 
