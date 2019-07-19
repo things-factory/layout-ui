@@ -72,15 +72,16 @@ class FloatingOverlay extends LitElement {
     return html`
       ${Boolean(this.backdrop)
         ? html`
-            <div id="backdrop" ?hidden=${!this.backdrop} @click=${this.onBackdropClick.bind(this)}></div>
+            <div id="backdrop" ?hidden=${!this.backdrop} @click=${this.onClose.bind(this)}></div>
           `
         : html``}
 
-      <slot direction=${this.direction} hovering=${this.hovering || 'next'}> </slot>
+      <slot @close-overlay=${this.onClose.bind(this)} direction=${this.direction} hovering=${this.hovering || 'next'}>
+      </slot>
     `
   }
 
-  onBackdropClick(event) {
+  onClose() {
     history.back()
   }
 }
