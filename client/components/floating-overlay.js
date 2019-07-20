@@ -30,11 +30,22 @@ class FloatingOverlay extends LitElement {
 
         slot {
           display: block;
+        }
+
+        slot[hovering='next'] {
           position: absolute;
         }
 
         slot[hovering='edge'] {
           position: fixed;
+        }
+
+        slot[hovering='center'] {
+          position: fixed;
+
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
         }
 
         slot[direction='down'] {
@@ -76,7 +87,7 @@ class FloatingOverlay extends LitElement {
           `
         : html``}
 
-      <slot @close-overlay=${this.onClose.bind(this)} direction=${this.direction} hovering=${this.hovering || 'next'}>
+      <slot @close-overlay=${this.onClose.bind(this)} direction=${this.direction} hovering=${this.hovering || 'center'}>
       </slot>
     `
   }

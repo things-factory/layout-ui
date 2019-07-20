@@ -40,7 +40,7 @@ class FooterBar extends connect(store)(LitElement) {
     var viewparts = this.viewparts
     var footerbars = Object.keys(viewparts)
       .map(name => viewparts[name])
-      .filter(viewpart => viewpart.type == 'footerbar')
+      .filter(viewpart => viewpart.position == 'footerbar')
 
     return html`
       ${footerbars.map(footerbar =>
@@ -48,7 +48,7 @@ class FooterBar extends connect(store)(LitElement) {
           ? html``
           : footerbar.hovering
           ? html`
-              <floating-overlay .backdrop=${footerbar.backdrop} direction="up" .hovering=${this.hovering}
+              <floating-overlay .backdrop=${footerbar.backdrop} direction="up" .hovering=${footerbar.hovering}
                 >${footerbar.template}</floating-overlay
               >
             `

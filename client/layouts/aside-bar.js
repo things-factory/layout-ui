@@ -44,7 +44,7 @@ class AsideBar extends connect(store)(LitElement) {
     var viewparts = this.viewparts
     var asidebars = Object.keys(viewparts)
       .map(name => viewparts[name])
-      .filter(viewpart => viewpart.type == 'asidebar')
+      .filter(viewpart => viewpart.position == 'asidebar')
 
     return html`
       ${asidebars.map(asidebar =>
@@ -52,7 +52,7 @@ class AsideBar extends connect(store)(LitElement) {
           ? html``
           : asidebar.hovering
           ? html`
-              <floating-overlay .backdrop=${asidebar.backdrop} direction="left" .hovering=${this.hovering}
+              <floating-overlay .backdrop=${asidebar.backdrop} direction="left" .hovering=${asidebar.hovering}
                 >${asidebar.template}</floating-overlay
               >
             `

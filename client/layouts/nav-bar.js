@@ -47,7 +47,7 @@ class NavBar extends connect(store)(LitElement) {
     var viewparts = this.viewparts
     var navbars = Object.keys(viewparts)
       .map(name => viewparts[name])
-      .filter(viewpart => viewpart.type == 'navbar')
+      .filter(viewpart => viewpart.position == 'navbar')
 
     return html`
       ${navbars.map(navbar =>
@@ -55,7 +55,7 @@ class NavBar extends connect(store)(LitElement) {
           ? html``
           : navbar.hovering
           ? html`
-              <floating-overlay .backdrop=${navbar.backdrop} direction="right" .hovering=${this.hovering}
+              <floating-overlay .backdrop=${navbar.backdrop} direction="right" .hovering=${navbar.hovering}
                 >${navbar.template}</floating-overlay
               >
             `
