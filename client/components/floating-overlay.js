@@ -80,6 +80,8 @@ class FloatingOverlay extends LitElement {
   }
 
   render() {
+    var direction = this.hovering == 'center' ? false : this.direction
+
     return html`
       ${Boolean(this.backdrop)
         ? html`
@@ -87,7 +89,7 @@ class FloatingOverlay extends LitElement {
           `
         : html``}
 
-      <slot @close-overlay=${this.onClose.bind(this)} direction=${this.direction} hovering=${this.hovering || 'center'}>
+      <slot @close-overlay=${this.onClose.bind(this)} direction=${direction} hovering=${this.hovering || 'center'}>
       </slot>
     `
   }
