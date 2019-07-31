@@ -1,4 +1,5 @@
 import { css, html, LitElement } from 'lit-element'
+import { ScrollbarStyles } from '@things-factory/shell'
 
 class FloatingOverlay extends LitElement {
   static get properties() {
@@ -11,6 +12,7 @@ class FloatingOverlay extends LitElement {
 
   static get styles() {
     return [
+      ScrollbarStyles,
       css`
         :host {
           position: relative;
@@ -26,6 +28,10 @@ class FloatingOverlay extends LitElement {
           height: 100vh;
 
           background-color: var(--overlay-background-color);
+        }
+
+        ::slotted(*) {
+          box-sizing: border-box;
         }
 
         slot {
@@ -53,6 +59,7 @@ class FloatingOverlay extends LitElement {
 
           width: 100%;
           max-height: 50vh;
+          overflow-y: auto;
         }
 
         slot[direction='up'] {
@@ -60,20 +67,23 @@ class FloatingOverlay extends LitElement {
 
           width: 100%;
           max-height: 50vh;
+          overflow-y: auto;
         }
 
         slot[direction='left'] {
           right: 0;
 
           height: 100%;
-          max-width: 50vh;
+          max-width: 50vw;
+          overflow-x: auto;
         }
 
         slot[direction='right'] {
           left: 0;
 
           height: 100%;
-          max-width: 50vh;
+          max-width: 50vw;
+          overflow-x: auto;
         }
       `
     ]
