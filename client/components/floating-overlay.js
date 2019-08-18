@@ -85,6 +85,24 @@ class FloatingOverlay extends LitElement {
           max-width: 50vw;
           overflow-x: auto;
         }
+
+        @media screen and (max-width: 460px) {
+          slot[direction='down'] {
+            max-height: 100vh;
+          }
+
+          slot[direction='up'] {
+            max-height: 100vh;
+          }
+
+          slot[direction='left'] {
+            max-width: 100vw;
+          }
+
+          slot[direction='right'] {
+            max-width: 100vw;
+          }
+        }
       `
     ]
   }

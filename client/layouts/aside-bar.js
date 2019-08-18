@@ -27,7 +27,6 @@ class AsideBar extends connect(store)(LitElement) {
         *[asidebar] {
           position: relative;
           right: 0;
-          max-width: 70vw;
           height: 100%;
 
           overflow: auto;
