@@ -6,7 +6,7 @@ class FloatingOverlay extends LitElement {
     return {
       backdrop: Boolean,
       direction: String,
-      hovering: String
+      hovering: { type: String, reflect: true }
     }
   }
 
@@ -17,6 +17,11 @@ class FloatingOverlay extends LitElement {
         :host {
           position: relative;
           z-index: 1;
+        }
+
+        :host[hovering='edge'] {
+          /* edge hovering 인 경우에는 상위 relative position 크기와 위치를 반영한다. */
+          position: initial;
         }
 
         #backdrop {
@@ -36,14 +41,7 @@ class FloatingOverlay extends LitElement {
 
         slot {
           display: block;
-        }
-
-        slot[hovering='next'] {
           position: absolute;
-        }
-
-        slot[hovering='edge'] {
-          position: sticky;
         }
 
         slot[hovering='center'] {

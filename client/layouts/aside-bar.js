@@ -25,15 +25,7 @@ class AsideBar extends connect(store)(LitElement) {
         }
 
         *[asidebar] {
-          position: relative;
-          right: 0;
-          height: 100%;
-
-          overflow: auto;
-        }
-
-        *[hovering] {
-          position: absolute;
+          display: block;
         }
       `
     ]

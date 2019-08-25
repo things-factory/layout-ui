@@ -28,10 +28,6 @@ class FooterBar extends connect(store)(LitElement) {
         *[footerbar] {
           display: block;
         }
-
-        *[hovering] {
-          position: absolute;
-        }
       `
     ]
   }

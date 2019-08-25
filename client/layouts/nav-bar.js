@@ -28,16 +28,7 @@ class NavBar extends connect(store)(LitElement) {
         }
 
         *[navbar] {
-          position: relative;
-          left: 0;
-          max-width: 70vw;
-          height: 100%;
-
-          overflow: auto;
-        }
-
-        *[hovering] {
-          position: absolute;
+          display: block;
         }
       `
     ]

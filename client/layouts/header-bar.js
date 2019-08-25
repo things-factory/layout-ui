@@ -24,6 +24,10 @@ class HeaderBar extends connect(store)(LitElement) {
 
           background-color: var(--header-bar-background-color);
         }
+
+        *[headerbar] {
+          display: block;
+        }
       `
     ]
   }
