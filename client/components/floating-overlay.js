@@ -43,7 +43,7 @@ class FloatingOverlay extends LitElement {
         }
 
         slot[hovering='edge'] {
-          position: fixed;
+          position: sticky;
         }
 
         slot[hovering='center'] {
