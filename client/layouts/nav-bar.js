@@ -23,7 +23,6 @@ class NavBar extends connect(store)(LitElement) {
 
           position: relative;
 
-          overflow: hidden;
           background-color: var(--nav-bar-background-color);
         }
 

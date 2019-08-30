@@ -19,7 +19,7 @@ class FloatingOverlay extends LitElement {
           z-index: 1;
         }
 
-        :host[hovering='edge'] {
+        :host([hovering='edge']) {
           /* edge hovering 인 경우에는 상위 relative position 크기와 위치를 반영한다. */
           position: initial;
         }
