@@ -28,6 +28,7 @@ class NavBar extends connect(store)(LitElement) {
 
         *[navbar] {
           display: block;
+          overflow-y: auto;
         }
       `
     ]

@@ -26,6 +26,7 @@ class AsideBar extends connect(store)(LitElement) {
 
         *[asidebar] {
           display: block;
+          overflow-y: auto;
         }
       `
     ]
