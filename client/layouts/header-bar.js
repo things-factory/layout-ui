@@ -35,7 +35,12 @@ class HeaderBar extends connect(store)(LitElement) {
   render() {
     var viewparts = this.viewparts
     var headerbars = Object.keys(viewparts)
-      .map(name => viewparts[name])
+      .map(name => {
+        return {
+          name,
+          ...viewparts[name]
+        }
+      })
       .filter(viewpart => viewpart.position == 'headerbar')
 
     return html`
@@ -44,7 +49,11 @@ class HeaderBar extends connect(store)(LitElement) {
           ? html``
           : headerbar.hovering
           ? html`
-              <floating-overlay .backdrop=${headerbar.backdrop} direction="down" .hovering=${headerbar.hovering}
+              <floating-overlay
+                .backdrop=${headerbar.backdrop}
+                direction="down"
+                .hovering=${headerbar.hovering}
+                .name=${headerbar.name}
                 >${headerbar.template}</floating-overlay
               >
             `

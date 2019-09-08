@@ -6,7 +6,8 @@ class FloatingOverlay extends LitElement {
     return {
       backdrop: Boolean,
       direction: String,
-      hovering: { type: String, reflect: true }
+      hovering: { type: String, reflect: true },
+      name: String
     }
   }
 
@@ -120,8 +121,23 @@ class FloatingOverlay extends LitElement {
     `
   }
 
+  disconnectedCallback() {
+    document.dispatchEvent(
+      new CustomEvent('overlay-closed', {
+        detail: this.name
+      })
+    )
+
+    super.disconnectedCallback()
+  }
+
   onClose() {
-    history.back()
+    /* 현재 overlay state를 확인해서, 자신이 포함하고 있는 템플릿인 경우에 history.back() 한다. */
+
+    var state = history.state
+    var overlay = (state || {}).overlay
+
+    overlay && overlay.name == this.name && history.back()
   }
 }
 
