@@ -101,6 +101,11 @@ class FloatingOverlay extends LitElement {
           slot[direction='right'] {
             max-width: 100vw;
           }
+
+          slot[hovering='center'] {
+            width: 100vw;
+            height: 100vh;
+          }
         }
       `
     ]
