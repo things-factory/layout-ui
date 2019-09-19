@@ -7,6 +7,7 @@ class FloatingOverlay extends LitElement {
       backdrop: Boolean,
       direction: String,
       hovering: { type: String, reflect: true },
+      size: { type: String, reflec: true },
       name: String
     }
   }
@@ -51,6 +52,26 @@ class FloatingOverlay extends LitElement {
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
+        }
+
+        slot[hovering='center'] {
+          width: var(--overlay-center-normal-width, 60%);
+          height: var(--overlay-center-normal-height, 60%);
+        }
+
+        slot[hovering='center'][size='small'] {
+          width: var(--overlay-center-small-width, 40%);
+          height: var(--overlay-center-small-height, 40%);
+        }
+
+        slot[hovering='center'][size='large'] {
+          width: var(--overlay-center-large-width, 100%);
+          height: var(--overlay-center-large-height, 100%);
+        }
+
+        slot[hovering='center']::slotted(*) {
+          width: 100%;
+          height: 100%;
         }
 
         slot[direction='down'] {
@@ -103,8 +124,12 @@ class FloatingOverlay extends LitElement {
           }
 
           slot[hovering='center'] {
-            width: 100vw;
-            height: 100vh;
+            --overlay-center-small-width: 100%;
+            --overlay-center-small-width: 100%;
+            --overlay-center-normal-width: 100%;
+            --overlay-center-normal-width: 100%;
+            --overlay-center-large-width: 100%;
+            --overlay-center-large-width: 100%;
           }
         }
       `
@@ -121,7 +146,12 @@ class FloatingOverlay extends LitElement {
           `
         : html``}
 
-      <slot @close-overlay=${this.onClose.bind(this)} direction=${direction} hovering=${this.hovering || 'center'}>
+      <slot
+        @close-overlay=${this.onClose.bind(this)}
+        direction=${direction}
+        hovering=${this.hovering || 'center'}
+        size=${this.size || 'normal'}
+      >
       </slot>
     `
   }

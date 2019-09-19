@@ -56,6 +56,7 @@ class NavBar extends connect(store)(LitElement) {
                 direction="right"
                 .hovering=${navbar.hovering}
                 .name=${navbar.name}
+                .size=${navbar.size}
                 >${navbar.template}</floating-overlay
               >
             `
