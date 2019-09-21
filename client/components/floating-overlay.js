@@ -1,14 +1,17 @@
 import { css, html, LitElement } from 'lit-element'
 import { ScrollbarStyles } from '@things-factory/shell'
 
+import '@material/mwc-icon'
+
 class FloatingOverlay extends LitElement {
   static get properties() {
     return {
       backdrop: Boolean,
       direction: String,
       hovering: { type: String, reflect: true },
-      size: { type: String, reflec: true },
-      name: String
+      size: String,
+      name: String,
+      closable: Boolean
     }
   }
 
@@ -16,6 +19,7 @@ class FloatingOverlay extends LitElement {
     return [
       ScrollbarStyles,
       css`
+        /* for layout style */
         :host {
           position: relative;
           z-index: 1;
@@ -37,16 +41,14 @@ class FloatingOverlay extends LitElement {
           background-color: var(--overlay-background-color);
         }
 
-        ::slotted(*) {
-          box-sizing: border-box;
-        }
-
-        slot {
-          display: block;
+        [overlayed] {
           position: absolute;
+
+          display: flex;
+          flex-direction: column;
         }
 
-        slot[hovering='center'] {
+        [overlayed][hovering='center'] {
           position: fixed;
 
           left: 50%;
@@ -54,82 +56,149 @@ class FloatingOverlay extends LitElement {
           transform: translate(-50%, -50%);
         }
 
-        slot[hovering='center'] {
+        [hovering='center'] {
           width: var(--overlay-center-normal-width, 60%);
           height: var(--overlay-center-normal-height, 60%);
         }
 
-        slot[hovering='center'][size='small'] {
+        [hovering='center'][size='small'] {
           width: var(--overlay-center-small-width, 40%);
           height: var(--overlay-center-small-height, 40%);
         }
 
-        slot[hovering='center'][size='large'] {
+        [hovering='center'][size='large'] {
           width: var(--overlay-center-large-width, 100%);
           height: var(--overlay-center-large-height, 100%);
         }
 
-        slot[hovering='center']::slotted(*) {
+        ::slotted(*) {
+          box-sizing: border-box;
+        }
+
+        [content] {
+          flex: 1;
+
+          overflow: hidden;
+        }
+
+        [hovering='center'] [content] ::slotted(*) {
           width: 100%;
           height: 100%;
         }
 
-        slot[direction='down'] {
+        [direction='down'] {
           top: 0;
 
           width: 100%;
           max-height: 50vh;
+        }
+
+        [direction='down'] [content] {
           overflow-y: auto;
         }
 
-        slot[direction='up'] {
+        [direction='up'] {
           bottom: 0;
 
           width: 100%;
           max-height: 50vh;
+        }
+
+        [direction='up'] [content] {
           overflow-y: auto;
         }
 
-        slot[direction='left'] {
+        [direction='left'] {
           right: 0;
 
           height: 100%;
           max-width: 50vw;
+        }
+
+        [direction='left'] [content] {
           overflow-x: auto;
         }
 
-        slot[direction='right'] {
+        [direction='right'] {
           left: 0;
 
           height: 100%;
           max-width: 50vw;
+        }
+
+        [direction='right'] [content] {
           overflow-x: auto;
         }
 
         @media screen and (max-width: 460px) {
-          slot[direction='down'] {
+          [direction='down'] {
             max-height: 100vh;
           }
 
-          slot[direction='up'] {
+          [direction='up'] {
             max-height: 100vh;
           }
 
-          slot[direction='left'] {
+          [direction='left'] {
             max-width: 100vw;
           }
 
-          slot[direction='right'] {
+          [direction='right'] {
             max-width: 100vw;
           }
 
-          slot[hovering='center'] {
+          [hovering='center'] {
             --overlay-center-small-width: 100%;
             --overlay-center-small-width: 100%;
             --overlay-center-normal-width: 100%;
             --overlay-center-normal-width: 100%;
             --overlay-center-large-width: 100%;
             --overlay-center-large-width: 100%;
+          }
+        }
+      `,
+      css`
+        /* for header style */
+        [header] {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          background-color: var(--overlay-header-background-color, gray);
+        }
+
+        slot[name='header'] {
+          flex: 1;
+        }
+
+        [name='header']::slotted(*) {
+          margin: 0 auto;
+        }
+
+        [historyback] {
+          margin-right: auto;
+        }
+
+        [close] {
+          margin-left: auto;
+        }
+
+        [historyback],
+        [close] {
+          display: none;
+        }
+
+        [closable][close] {
+          display: block;
+        }
+
+        @media screen and (max-width: 460px) {
+          [closable][historyback] {
+            display: block;
+          }
+
+          [close] {
+            display: none;
           }
         }
       `
@@ -146,13 +215,23 @@ class FloatingOverlay extends LitElement {
           `
         : html``}
 
-      <slot
-        @close-overlay=${this.onClose.bind(this)}
-        direction=${direction}
+      <div
+        overlayed
         hovering=${this.hovering || 'center'}
+        direction=${direction}
         size=${this.size || 'normal'}
+        @close-overlay=${this.onClose.bind(this)}
       >
-      </slot>
+        <div header>
+          <mwc-icon @click=${this.onClose.bind(this)} ?closable=${this.closable} historyback>arrow_back</mwc-icon>
+          <slot name="header"> </slot>
+          <mwc-icon @click=${this.onClose.bind(this)} ?closable=${this.closable} close>close</mwc-icon>
+        </div>
+
+        <div content>
+          <slot> </slot>
+        </div>
+      </div>
     `
   }
 
