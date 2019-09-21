@@ -55,6 +55,8 @@ class AsideBar extends connect(store)(LitElement) {
                 .hovering=${asidebar.hovering}
                 .name=${asidebar.name}
                 .size=${asidebar.size}
+                .title=${asidebar.title}
+                .closable=${asidebar.closable}
                 >${asidebar.template}</floating-overlay
               >
             `

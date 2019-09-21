@@ -11,6 +11,7 @@ class FloatingOverlay extends LitElement {
       hovering: { type: String, reflect: true },
       size: String,
       name: String,
+      title: String,
       closable: Boolean
     }
   }
@@ -169,6 +170,11 @@ class FloatingOverlay extends LitElement {
 
         slot[name='header'] {
           flex: 1;
+
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
         }
 
         [name='header']::slotted(*) {
@@ -197,7 +203,7 @@ class FloatingOverlay extends LitElement {
             display: block;
           }
 
-          [close] {
+          [closable][close] {
             display: none;
           }
         }
@@ -224,7 +230,13 @@ class FloatingOverlay extends LitElement {
       >
         <div header>
           <mwc-icon @click=${this.onClose.bind(this)} ?closable=${this.closable} historyback>arrow_back</mwc-icon>
-          <slot name="header"> </slot>
+          <slot name="header">
+            ${this.title
+              ? html`
+                  <label>${this.title}</label>
+                `
+              : html``}</slot
+          >
           <mwc-icon @click=${this.onClose.bind(this)} ?closable=${this.closable} close>close</mwc-icon>
         </div>
 

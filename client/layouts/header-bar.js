@@ -54,7 +54,9 @@ class HeaderBar extends connect(store)(LitElement) {
                 direction="down"
                 .hovering=${headerbar.hovering}
                 .name=${headerbar.name}
+                .title=${headerbar.title}
                 .size=${headerbar.size}
+                .closable=${headerbar.closable}
                 >${headerbar.template}</floating-overlay
               >
             `
