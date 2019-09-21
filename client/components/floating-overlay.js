@@ -165,7 +165,8 @@ class FloatingOverlay extends LitElement {
           flex-direction: row;
           align-items: center;
 
-          background-color: var(--overlay-header-background-color, gray);
+          background-color: var(--overlay-header-background-color);
+          color: var(--overlay-header-color);
         }
 
         slot[name='header'] {
@@ -179,6 +180,11 @@ class FloatingOverlay extends LitElement {
 
         [name='header']::slotted(*) {
           margin: 0 auto;
+        }
+
+        [name='header'] > h1 {
+          text-transform: capitalize;
+          font: var(--overlay-header-font);
         }
 
         [historyback] {
@@ -233,7 +239,7 @@ class FloatingOverlay extends LitElement {
           <slot name="header">
             ${this.title
               ? html`
-                  <label>${this.title}</label>
+                  <h1>${this.title}</h1>
                 `
               : html``}</slot
           >
