@@ -86,75 +86,48 @@ class FloatingOverlay extends LitElement {
           width: 100%;
           height: 100%;
         }
-
+        [direction='up'],
         [direction='down'] {
-          top: 0;
-
-          width: 100%;
-          max-height: 50vh;
-        }
-
-        [direction='down'] [content] {
-          overflow-y: auto;
-        }
-
-        [direction='up'] {
           bottom: 0;
 
           width: 100%;
           max-height: 50vh;
         }
 
+        [direction='down'] {
+          top: 0;
+        }
+
+        [direction='down'] [content],
         [direction='up'] [content] {
           overflow-y: auto;
         }
 
-        [direction='left'] {
+        [direction='left'],
+        [direction='right'] {
           right: 0;
 
           height: 100%;
           max-width: 50vw;
         }
-
-        [direction='left'] [content] {
-          overflow-x: auto;
-        }
-
         [direction='right'] {
           left: 0;
-
-          height: 100%;
-          max-width: 50vw;
         }
 
+        [direction='left'] [content],
         [direction='right'] [content] {
           overflow-x: auto;
         }
 
         @media screen and (max-width: 460px) {
+          [direction='up'],
           [direction='down'] {
             max-height: 100vh;
           }
 
-          [direction='up'] {
-            max-height: 100vh;
-          }
-
-          [direction='left'] {
-            max-width: 100vw;
-          }
-
+          [direction='left'],
           [direction='right'] {
             max-width: 100vw;
-          }
-
-          [hovering='center'] {
-            --overlay-center-small-width: 100%;
-            --overlay-center-small-width: 100%;
-            --overlay-center-normal-width: 100%;
-            --overlay-center-normal-width: 100%;
-            --overlay-center-large-width: 100%;
-            --overlay-center-large-width: 100%;
           }
         }
       `,
@@ -188,11 +161,13 @@ class FloatingOverlay extends LitElement {
         }
 
         [historyback] {
+          margin-left: 10px;
           margin-right: auto;
         }
 
         [close] {
           margin-left: auto;
+          margin-right: 10px;
         }
 
         [historyback],
