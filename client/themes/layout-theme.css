@@ -1,0 +1,63 @@
+body {
+  --header-bar-background-color: var(--secondary-color);
+  --header-bar-icon-size: var(--icon-default-size);
+  --header-bar-title: bold 16px var(--theme-font);
+  --header-bar-color: #fff;
+  --header-bar-height: 45px;
+
+  --nav-bar-background-color: var(--primary-color);
+
+  --group-bar-background-color: var(--primary-color);
+  --group-bar-textbutton: 16px/32px var(--theme-font);
+  --group-bar-textbutton-active: bold var(--group-bar-textbutton);
+  --group-bar-active-line-color: var(--focus-color);
+  --group-bar-line: solid 3px rgba(0, 0, 0, 0.2);
+
+  --aside-background-color: var(--secondary-background-color);
+  --aside-list-textbtton: 18px var(--theme-font);
+  --aside-list-icon: var(--icon-default-size);
+  --aside-list-bottom-line: var(--border-dark-color);
+  --aside-list-detail-background-color: #fff;
+  --aside-list-detail-text: 14px var(--primary-background-color);
+
+  --footer-bar-border-top: 1px solid rgba(0, 0, 0, 0.2);
+
+  /* overlay style */
+  --overlay-center-small-width: 30%;
+  --overlay-center-small-height: 30%;
+  --overlay-center-normal-width: 50%;
+  --overlay-center-normal-height: 50%;
+  --overlay-center-large-width: 75%;
+  --overlay-center-large-height: 75%;
+  --overlay-header-height: var(--header-bar-height);
+  --overlay-header-background-color: var(--header-bar-background-color);
+  --overlay-header-color: #fff;
+  --overlay-header-font: var(--header-bar-title);
+  --overlay-background-color: rgba(0, 0, 0, 0.5);
+  --overlay-margin-bottom: 0px;
+
+  --popup-content-background-color: var(--main-section-background-color);
+  --popup-content-padding: 10px 20px;
+}
+
+@media only screen and (max-width: 460px) {
+  body {
+    --overlay-center-small-width: 100%;
+    --overlay-center-small-height: 100%;
+    --overlay-center-normal-width: 100%;
+    --overlay-center-normal-height: 100%;
+    --overlay-center-large-width: 100%;
+    --overlay-center-large-height: 100%;
+  }
+}
+
+@media (min-width: 461px) and (max-width: 1024px) {
+  body {
+    --overlay-center-small-width: 40%;
+    --overlay-center-small-height: 40%;
+    --overlay-center-normal-width: 60%;
+    --overlay-center-normal-height: 60%;
+    --overlay-center-large-width: 80%;
+    --overlay-center-large-height: 80%;
+  }
+}
