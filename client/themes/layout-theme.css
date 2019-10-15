@@ -22,6 +22,18 @@ body {
 
   --footer-bar-border-top: 1px solid rgba(0, 0, 0, 0.2);
 
+  --button-container-margin: inintial;
+  --button-container-padding: 0 0 12px 0;
+  --button-container-background: transparent;
+  --button-container-height: initial;
+  --button-container-align: center;
+  --button-container-button-background-color: var(--secondary-color);
+  --button-container-button-border-radius: var(--button-border-radius);
+  --button-container-button-margin: var(--button-margin);
+  --button-container-button-font: var(--button-font);
+  --button-container-button-height: initial;
+  --button-container-button-border: var(--button-border);
+
   /* overlay style */
   --overlay-center-small-width: 30%;
   --overlay-center-small-height: 30%;
@@ -42,6 +54,18 @@ body {
 
 @media only screen and (max-width: 460px) {
   body {
+    --button-container-margin: 0 -15px;
+    --button-container-padding: 0 0 0 0;
+    --button-container-background: #586272;
+    --button-container-height: 50px;
+    --button-container-align: right;
+    --button-container-button-background-color: transparent;
+    --button-container-button-border-radius: 0;
+    --button-container-button-margin: 0;
+    --button-container-button-font: normal 17px var(--theme-font);
+    --button-container-button-height: 50px;
+    --button-container-button-border: 1px solid rgba(0, 0, 0, 0.1);
+
     --overlay-center-small-width: 100%;
     --overlay-center-small-height: 100%;
     --overlay-center-normal-width: 100%;
