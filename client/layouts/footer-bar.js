@@ -4,6 +4,8 @@ import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
 
 import '../components/floating-overlay'
+import '../components/resize-splitter'
+
 import './snack-bar'
 
 class FooterBar extends connect(store)(LitElement) {
@@ -66,10 +68,10 @@ class FooterBar extends connect(store)(LitElement) {
               </div>
               ${footerbar.resizable
                 ? html`
-                    <resize-slider
-                      @slider-dragstart=${e => this.resizeStart(e)}
-                      @slider-drag=${e => this.resizeDrag(e)}
-                    ></resize-slider>
+                    <resize-splitter
+                      @splitter-dragstart=${e => this.resizeStart(e)}
+                      @splitter-drag=${e => this.resizeDrag(e)}
+                    ></resize-splitter>
                   `
                 : html``}
             `

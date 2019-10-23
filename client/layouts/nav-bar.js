@@ -4,7 +4,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store, ScrollbarStyles } from '@things-factory/shell'
 
 import '../components/floating-overlay'
-import '../components/resize-slider'
+import '../components/resize-splitter'
 
 class NavBar extends connect(store)(LitElement) {
   static get properties() {
@@ -70,11 +70,11 @@ class NavBar extends connect(store)(LitElement) {
               </div>
               ${navbar.resizable
                 ? html`
-                    <resize-slider
-                      @slider-dragstart=${e => this.resizeStart(e)}
-                      @slider-drag=${e => this.resizeDrag(e)}
+                    <resize-splitter
+                      @splitter-dragstart=${e => this.resizeStart(e)}
+                      @splitter-drag=${e => this.resizeDrag(e)}
                       vertical
-                    ></resize-slider>
+                    ></resize-splitter>
                   `
                 : html``}
             `

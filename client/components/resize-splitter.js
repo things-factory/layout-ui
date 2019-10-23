@@ -1,12 +1,13 @@
 import { LitElement, html, css } from 'lit-element'
 
-export class ResizeSlider extends LitElement {
+export class ResizeSplitter extends LitElement {
   static get dragImage() {
-    if (!ResizeSlider._dragImage) {
-      ResizeSlider._dragImage = new Image()
-      ResizeSlider._dragImage.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
+    if (!ResizeSplitter._dragImage) {
+      ResizeSplitter._dragImage = new Image()
+      ResizeSplitter._dragImage.src =
+        'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
     }
-    return ResizeSlider._dragImage
+    return ResizeSplitter._dragImage
   }
 
   static get styles() {
@@ -73,7 +74,7 @@ export class ResizeSlider extends LitElement {
   }
 
   _onDragStart(e) {
-    e.dataTransfer.setDragImage(ResizeSlider.dragImage, 0, 0)
+    e.dataTransfer.setDragImage(ResizeSplitter.dragImage, 0, 0)
 
     this.dragstart = {
       x: e.clientX,
@@ -81,7 +82,7 @@ export class ResizeSlider extends LitElement {
     }
 
     this.dispatchEvent(
-      new CustomEvent('slider-dragstart', {
+      new CustomEvent('splitter-dragstart', {
         bubbles: true,
         composed: true
       })
@@ -96,7 +97,7 @@ export class ResizeSlider extends LitElement {
     }
 
     this.dispatchEvent(
-      new CustomEvent('slider-drag', {
+      new CustomEvent('splitter-drag', {
         bubbles: true,
         composed: true,
         detail: {
@@ -111,7 +112,7 @@ export class ResizeSlider extends LitElement {
 
   _onDragEnd(e) {
     this.dispatchEvent(
-      new CustomEvent('slider-dragend', {
+      new CustomEvent('splitter-dragend', {
         bubbles: true,
         composed: true,
         detail: {
@@ -125,4 +126,4 @@ export class ResizeSlider extends LitElement {
   }
 }
 
-customElements.define('resize-slider', ResizeSlider)
+customElements.define('resize-splitter', ResizeSplitter)
