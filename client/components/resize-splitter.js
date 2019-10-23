@@ -14,13 +14,12 @@ export class ResizeSplitter extends LitElement {
     return css`
       :host {
         position: relative;
-
-        opacity: 0.1;
-        background-color: black;
+        opacity: 0.7;
+        background-color: var(--splitter-background-color);
       }
 
       :host(:hover) {
-        opacity: 0.5;
+        background-color: var(--splitter-hover-background-color);
       }
 
       div {
@@ -39,13 +38,13 @@ export class ResizeSplitter extends LitElement {
     super.connectedCallback()
 
     if (this.hasAttribute('vertical')) {
-      this.style.width = '4px'
+      this.style.width = '3px'
       this.style.height = '100%'
-      this.style.cursor = 'ew-resize'
+      this.style.cursor = 'col-resize'
     } else {
       this.style.width = '100%'
-      this.style.height = '4px'
-      this.style.cursor = 'ns-resize'
+      this.style.height = '3px'
+      this.style.cursor = 'row-resize'
     }
   }
 

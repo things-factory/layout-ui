@@ -34,7 +34,10 @@ body {
   --button-container-button-height: initial;
   --button-container-button-border: var(--button-border);
 
-  /* overlay style */
+  --popup-content-background-color: var(--main-section-background-color);
+  --popup-content-padding: 10px 20px;
+
+  /* components - floating overlay style */
   --overlay-center-small-width: 30%;
   --overlay-center-small-height: 30%;
   --overlay-center-normal-width: 50%;
@@ -48,8 +51,9 @@ body {
   --overlay-background-color: rgba(0, 0, 0, 0.5);
   --overlay-margin-bottom: 0px;
 
-  --popup-content-background-color: var(--main-section-background-color);
-  --popup-content-padding: 10px 20px;
+  /* components - resize splitter style */
+  --splitter-background-color: rgba(0, 0, 0, 0.1);
+  --splitter-hover-background-color: var(--primary-color);
 }
 
 @media only screen and (max-width: 460px) {
