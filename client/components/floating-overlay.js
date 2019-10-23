@@ -55,6 +55,13 @@ class FloatingOverlay extends LitElement {
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
+
+          opacity: 0;
+        }
+
+        [overlayed][hovering='center'][opened] {
+          opacity: 1;
+          transition: opacity 0.7s ease-in;
         }
 
         [hovering='center'] {
@@ -91,7 +98,14 @@ class FloatingOverlay extends LitElement {
           bottom: 0;
 
           width: 100%;
-          max-height: 50vh;
+
+          max-height: 0;
+          transition: max-height 0.7s ease-in;
+        }
+
+        [direction='up'][opened],
+        [direction='down'][opened] {
+          max-height: 100vh;
         }
 
         [direction='down'] {
@@ -108,10 +122,17 @@ class FloatingOverlay extends LitElement {
           right: 0;
 
           height: 100%;
-          max-width: 50vw;
+
+          max-width: 0;
+          transition: max-width 0.3s ease-in;
         }
         [direction='right'] {
           left: 0;
+        }
+
+        [direction='left'][opened],
+        [direction='right'][opened] {
+          max-width: 100vw;
         }
 
         [direction='left'] [content],
@@ -226,6 +247,13 @@ class FloatingOverlay extends LitElement {
         </div>
       </div>
     `
+  }
+
+  firstUpdated() {
+    requestAnimationFrame(() => {
+      /* transition(animation) 효과를 위해 'opened' 속성을 변화시킨다. */
+      this.shadowRoot.querySelector('[overlayed]').setAttribute('opened', 'true')
+    })
   }
 
   disconnectedCallback() {
