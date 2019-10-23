@@ -18,7 +18,7 @@ class AsideBar extends connect(store)(LitElement) {
       css`
         :host {
           display: flex;
-          flex-direction: row-reverse nowrap;
+          flex-flow: row-reverse nowrap;
           align-items: stretch;
 
           position: relative;
@@ -64,9 +64,31 @@ class AsideBar extends connect(store)(LitElement) {
               <div asidebar>
                 ${asidebar.template}
               </div>
+              ${asidebar.resizable
+                ? html`
+                    <resize-slider
+                      @slider-dragstart=${e => this.resizeStart(e)}
+                      @slider-drag=${e => this.resizeDrag(e)}
+                      vertical
+                    ></resize-slider>
+                  `
+                : html``}
             `
       )}
     `
+  }
+
+  resizeStart(e) {
+    this._startWidth = e.target.previousElementSibling.offsetWidth
+  }
+
+  resizeDrag(e) {
+    var delta = e.detail
+
+    var x = e.target.previousElementSibling.querySelectorAll('*')
+    Array.from(x).forEach(ele => {
+      ele.style.width = `${this._startWidth - delta.x}px`
+    })
   }
 
   stateChanged(state) {

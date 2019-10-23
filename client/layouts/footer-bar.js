@@ -64,6 +64,14 @@ class FooterBar extends connect(store)(LitElement) {
               <div footerbar>
                 ${footerbar.template}
               </div>
+              ${footerbar.resizable
+                ? html`
+                    <resize-slider
+                      @slider-dragstart=${e => this.resizeStart(e)}
+                      @slider-drag=${e => this.resizeDrag(e)}
+                    ></resize-slider>
+                  `
+                : html``}
             `
       )}
 
@@ -74,6 +82,19 @@ class FooterBar extends connect(store)(LitElement) {
       >
       </snack-bar>
     `
+  }
+
+  resizeStart(e) {
+    this._startHeight = e.target.previousElementSibling.offsetHeight
+  }
+
+  resizeDrag(e) {
+    var delta = e.detail
+
+    var x = e.target.previousElementSibling.querySelectorAll('*')
+    Array.from(x).forEach(ele => {
+      ele.style.height = `${this._startHeight - delta.y}px`
+    })
   }
 
   stateChanged(state) {

@@ -4,6 +4,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store, ScrollbarStyles } from '@things-factory/shell'
 
 import '../components/floating-overlay'
+import '../components/resize-slider'
 
 class NavBar extends connect(store)(LitElement) {
   static get properties() {
@@ -27,7 +28,8 @@ class NavBar extends connect(store)(LitElement) {
         }
 
         *[navbar] {
-          display: block;
+          display: flex;
+          flex-direction: row;
           overflow-y: auto;
         }
       `
@@ -66,9 +68,31 @@ class NavBar extends connect(store)(LitElement) {
               <div navbar>
                 ${navbar.template}
               </div>
+              ${navbar.resizable
+                ? html`
+                    <resize-slider
+                      @slider-dragstart=${e => this.resizeStart(e)}
+                      @slider-drag=${e => this.resizeDrag(e)}
+                      vertical
+                    ></resize-slider>
+                  `
+                : html``}
             `
       )}
     `
+  }
+
+  resizeStart(e) {
+    this._startWidth = e.target.previousElementSibling.offsetWidth
+  }
+
+  resizeDrag(e) {
+    var delta = e.detail
+
+    var x = e.target.previousElementSibling.querySelectorAll('*')
+    Array.from(x).forEach(ele => {
+      ele.style.width = `${this._startWidth + delta.x}px`
+    })
   }
 
   stateChanged(state) {
