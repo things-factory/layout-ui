@@ -61,7 +61,7 @@ class FloatingOverlay extends LitElement {
 
         [overlayed][hovering='center'][opened] {
           opacity: 1;
-          transition: opacity 0.7s ease-in;
+          transition: opacity 0.3s ease-in;
         }
 
         [hovering='center'] {
@@ -124,7 +124,7 @@ class FloatingOverlay extends LitElement {
           height: 100%;
 
           max-width: 0;
-          transition: max-width 0.3s ease-in;
+          transition: max-width 0.5s ease-in;
         }
         [direction='right'] {
           left: 0;
