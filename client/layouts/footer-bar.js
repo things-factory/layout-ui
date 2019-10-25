@@ -81,6 +81,7 @@ class FooterBar extends connect(store)(LitElement) {
         ?active=${this._snackbar.snackbarOpened}
         .level=${this._snackbar.level}
         .message=${this._snackbar.message}
+        .action=${this._snackbar.action}
       >
       </snack-bar>
     `
