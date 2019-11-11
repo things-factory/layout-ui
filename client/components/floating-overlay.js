@@ -95,21 +95,21 @@ class FloatingOverlay extends LitElement {
         }
         [direction='up'],
         [direction='down'] {
-          bottom: 0;
-
           width: 100%;
 
           max-height: 0;
           transition: max-height 0.7s ease-in;
         }
+        [direction='up'] {
+          bottom: 0;
+        }
+        [direction='down'] {
+          top: 0;
+        }
 
         [direction='up'][opened],
         [direction='down'][opened] {
           max-height: 100vh;
-        }
-
-        [direction='down'] {
-          top: 0;
         }
 
         [direction='down'] [content],
@@ -119,12 +119,13 @@ class FloatingOverlay extends LitElement {
 
         [direction='left'],
         [direction='right'] {
-          right: 0;
-
           height: 100%;
 
           max-width: 0;
           transition: max-width 0.5s ease-in;
+        }
+        [direction='left'] {
+          right: 0;
         }
         [direction='right'] {
           left: 0;
