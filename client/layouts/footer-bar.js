@@ -1,17 +1,12 @@
-import { LitElement, html, css } from 'lit-element'
-
-import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
-
+import { css, html, LitElement } from 'lit-element'
+import { connect } from 'pwa-helpers/connect-mixin.js'
 import '../components/floating-overlay'
 import '../components/resize-splitter'
-
-import './snack-bar'
 
 class FooterBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      _snackbar: Object,
       viewparts: Array
     }
   }
@@ -76,14 +71,6 @@ class FooterBar extends connect(store)(LitElement) {
                 : html``}
             `
       )}
-
-      <snack-bar
-        ?active=${this._snackbar.snackbarOpened}
-        .level=${this._snackbar.level}
-        .message=${this._snackbar.message}
-        .action=${this._snackbar.action}
-      >
-      </snack-bar>
     `
   }
 
@@ -101,8 +88,6 @@ class FooterBar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._snackbar = state.snackbar
-
     this.viewparts = state.layout.viewparts || {}
   }
 }

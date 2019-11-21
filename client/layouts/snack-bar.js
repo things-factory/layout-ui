@@ -3,13 +3,17 @@ import '@material/mwc-icon'
 import { CLOSE_SNACKBAR } from '@things-factory/layout-base'
 import { store } from '@things-factory/shell'
 import { css, html, LitElement } from 'lit-element'
+import { connect } from 'pwa-helpers/connect-mixin.js'
 
-class SnackBar extends LitElement {
+class SnackBar extends connect(store)(LitElement) {
   static get properties() {
     return {
       level: String,
       message: String,
-      active: Boolean,
+      active: {
+        reflect: true,
+        type: Boolean
+      },
       action: Object
     }
   }
@@ -100,6 +104,15 @@ class SnackBar extends LitElement {
           `
         : html``}
     `
+  }
+
+  stateChanged(state) {
+    var { level, message, snackbarOpened, action } = state.snackbar
+
+    this.level = level
+    this.message = message
+    this.active = snackbarOpened
+    this.action = action
   }
 }
 
