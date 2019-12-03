@@ -7,7 +7,11 @@ import '../components/resize-splitter'
 class FooterBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      viewparts: Array
+      viewparts: Array,
+      fullbleed: {
+        attribute: 'fullbleed',
+        type: Boolean
+      }
     }
   }
 
@@ -38,7 +42,7 @@ class FooterBar extends connect(store)(LitElement) {
           ...viewparts[name]
         }
       })
-      .filter(viewpart => viewpart.position == 'footerbar')
+      .filter(viewpart => viewpart.position == 'footerbar' && (!this.fullbleed || viewpart.hovering))
 
     return html`
       ${footerbars.map(footerbar =>

@@ -9,7 +9,11 @@ import '../components/resize-splitter'
 class HeaderBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      viewparts: Array
+      viewparts: Array,
+      fullbleed: {
+        attribute: 'fullbleed',
+        type: Boolean
+      }
     }
   }
 
@@ -42,7 +46,7 @@ class HeaderBar extends connect(store)(LitElement) {
           ...viewparts[name]
         }
       })
-      .filter(viewpart => viewpart.position == 'headerbar')
+      .filter(viewpart => viewpart.position == 'headerbar' && (!this.fullbleed || viewpart.hovering))
 
     return html`
       ${headerbars.map(headerbar =>

@@ -9,7 +9,11 @@ import '../components/resize-splitter'
 class AsideBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      viewparts: Array
+      viewparts: Array,
+      fullbleed: {
+        attribute: 'fullbleed',
+        type: Boolean
+      }
     }
   }
 
@@ -42,7 +46,7 @@ class AsideBar extends connect(store)(LitElement) {
           ...viewparts[name]
         }
       })
-      .filter(viewpart => viewpart.position == 'asidebar')
+      .filter(viewpart => viewpart.position == 'asidebar' && (!this.fullbleed || viewpart.hovering))
 
     return html`
       ${asidebars.map(asidebar =>
