@@ -107,7 +107,7 @@ class SnackBar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    var { level, message, snackbarOpened, action } = state.snackbar
+    var { level, message, snackbarOpened, action } = state.snackbar || {}
 
     this.level = level
     this.message = message
