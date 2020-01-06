@@ -9,7 +9,11 @@ import '../components/resize-splitter'
 class NavBar extends connect(store)(LitElement) {
   static get properties() {
     return {
-      viewparts: Array
+      viewparts: Array,
+      fullbleed: {
+        attribute: 'fullbleed',
+        type: Boolean
+      }
     }
   }
 
@@ -45,7 +49,7 @@ class NavBar extends connect(store)(LitElement) {
           ...viewparts[name]
         }
       })
-      .filter(viewpart => viewpart.position == 'navbar')
+      .filter(viewpart => viewpart.position == 'navbar' && (!this.fullbleed || viewpart.hovering))
 
     return html`
       ${navbars.map(navbar =>
