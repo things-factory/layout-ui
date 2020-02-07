@@ -4,7 +4,7 @@ body {
   --header-bar-title: bold 16px var(--theme-font);
   --header-bar-color: #fff;
   --header-bar-height: 45px;
-  --header-bar-item-padding: 0px 10px;
+  --header-bar-item-padding: 0px 5px 0 0;
 
   --nav-bar-background-color: var(--primary-color);
 
