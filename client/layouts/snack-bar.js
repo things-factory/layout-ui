@@ -12,9 +12,9 @@ class SnackBar extends connect(store)(LitElement) {
       message: String,
       active: {
         reflect: true,
-        type: Boolean
+        type: Boolean,
       },
-      action: Object
+      action: Object,
     }
   }
 
@@ -50,6 +50,10 @@ class SnackBar extends connect(store)(LitElement) {
           max-width: 20px;
         }
 
+        mwc-button {
+          display: block;
+        }
+
         .info {
           color: green;
         }
@@ -68,7 +72,7 @@ class SnackBar extends connect(store)(LitElement) {
             margin: auto;
           }
         }
-      `
+      `,
     ]
   }
 
@@ -77,17 +81,11 @@ class SnackBar extends connect(store)(LitElement) {
       <span>
         <mwc-icon class=${this.level}
           >${this.level == 'info'
-            ? html`
-                notification_important
-              `
+            ? html` notification_important `
             : this.level == 'warn'
-            ? html`
-                warning
-              `
+            ? html` warning `
             : this.level == 'error'
-            ? html`
-                error
-              `
+            ? html` error `
             : html``}</mwc-icon
         >
       </span>
@@ -95,7 +93,7 @@ class SnackBar extends connect(store)(LitElement) {
       ${this.action && this.action.label
         ? html`
             <mwc-button
-              @click=${e => {
+              @click=${(e) => {
                 store.dispatch({ type: CLOSE_SNACKBAR })
                 this.action.callback()
               }}
