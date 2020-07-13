@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit-element'
 
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store } from '@things-factory/shell'
+import { VIEWPART_LEVEL } from '@things-factory/layout-base'
 
 import '../components/floating-overlay'
 import '../components/resize-splitter'
@@ -47,6 +48,11 @@ class HeaderBar extends connect(store)(LitElement) {
         }
       })
       .filter(viewpart => viewpart.position == 'headerbar' && (!this.fullbleed || viewpart.hovering))
+
+    headerbars = [
+      ...headerbars.filter(viewpart => viewpart.level == VIEWPART_LEVEL.TOPMOST),
+      ...headerbars.filter(viewpart => viewpart.level !== VIEWPART_LEVEL.TOPMOST)
+    ]
 
     return html`
       ${headerbars.map(headerbar =>

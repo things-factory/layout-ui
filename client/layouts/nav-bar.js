@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit-element'
 
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store, ScrollbarStyles } from '@things-factory/shell'
+import { VIEWPART_LEVEL } from '@things-factory/layout-base'
 
 import '../components/floating-overlay'
 import '../components/resize-splitter'
@@ -50,6 +51,11 @@ class NavBar extends connect(store)(LitElement) {
         }
       })
       .filter(viewpart => viewpart.position == 'navbar' && (!this.fullbleed || viewpart.hovering))
+
+    navbars = [
+      ...navbars.filter(viewpart => viewpart.level == VIEWPART_LEVEL.TOPMOST),
+      ...navbars.filter(viewpart => viewpart.level !== VIEWPART_LEVEL.TOPMOST)
+    ]
 
     return html`
       ${navbars.map(navbar =>

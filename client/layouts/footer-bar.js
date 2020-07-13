@@ -1,6 +1,8 @@
 import { store } from '@things-factory/shell'
 import { css, html, LitElement } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
+import { VIEWPART_LEVEL } from '@things-factory/layout-base'
+
 import '../components/floating-overlay'
 import '../components/resize-splitter'
 
@@ -43,6 +45,11 @@ class FooterBar extends connect(store)(LitElement) {
         }
       })
       .filter(viewpart => viewpart.position == 'footerbar' && (!this.fullbleed || viewpart.hovering))
+
+    footerbars = [
+      ...footerbars.filter(viewpart => viewpart.level == VIEWPART_LEVEL.TOPMOST),
+      ...footerbars.filter(viewpart => viewpart.level !== VIEWPART_LEVEL.TOPMOST)
+    ]
 
     return html`
       ${footerbars.map(footerbar =>
