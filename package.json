@@ -25,7 +25,5 @@
   "dependencies": {
     "@things-factory/layout-base": "^2.0.0"
   },
-  "devDependencies": {
-    "@things-factory/tester": "^2.0.0"
-  }
+  "devDependencies": {}
 }
