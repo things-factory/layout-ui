@@ -219,9 +219,7 @@ class FloatingOverlay extends LitElement {
 
     return html`
       ${Boolean(this.backdrop)
-        ? html`
-            <div id="backdrop" ?hidden=${!this.backdrop} @click=${this.onClose.bind(this)}></div>
-          `
+        ? html` <div id="backdrop" ?hidden=${!this.backdrop} @click=${e => this.onClose(true)}></div> `
         : html``}
 
       <div
@@ -229,18 +227,12 @@ class FloatingOverlay extends LitElement {
         hovering=${this.hovering || 'center'}
         direction=${direction}
         size=${this.size || 'normal'}
-        @close-overlay=${this.onClose.bind(this)}
+        @close-overlay=${e => this.onClose()}
       >
         <div header>
-          <mwc-icon @click=${this.onClose.bind(this)} ?closable=${this.closable} historyback>arrow_back</mwc-icon>
-          <slot name="header">
-            ${this.title
-              ? html`
-                  <h1>${this.title}</h1>
-                `
-              : html``}</slot
-          >
-          <mwc-icon @click=${this.onClose.bind(this)} ?closable=${this.closable} close>close</mwc-icon>
+          <mwc-icon @click=${e => this.onClose()} ?closable=${this.closable} historyback>arrow_back</mwc-icon>
+          <slot name="header"> ${this.title ? html` <h1>${this.title}</h1> ` : html``}</slot>
+          <mwc-icon @click=${e => this.onClose()} ?closable=${this.closable} close>close</mwc-icon>
         </div>
 
         <div content>
@@ -267,13 +259,22 @@ class FloatingOverlay extends LitElement {
     super.disconnectedCallback()
   }
 
-  onClose() {
+  onClose(escape) {
     /* 현재 overlay state를 확인해서, 자신이 포함하고 있는 템플릿인 경우에 history.back() 한다. */
 
     var state = history.state
     var overlay = (state || {}).overlay
 
-    overlay && overlay.name == this.name && history.back()
+    if (!overlay || overlay.name !== this.name) {
+      return
+    }
+
+    /* Backdrop click 경우는 escape 시도라고 정의한다. overlay 속성이 escapable이 아닌 경우에는 동작하지 않는다. */
+    if (escape && !overlay.escapable) {
+      return true
+    }
+
+    history.back()
   }
 }
 
